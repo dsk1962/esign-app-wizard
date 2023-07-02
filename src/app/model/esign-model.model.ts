@@ -10,6 +10,11 @@ export class EsignTemplate {
     id : string='';
 }
 
+export class Option {
+    id : string='';
+    name : string='';
+}
+
 export class ActionRequest {
     action?: string;
     parameters: HttpParams = new HttpParams();

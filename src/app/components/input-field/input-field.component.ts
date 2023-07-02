@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
 
 @Component({
   selector: 'esign-input-field',
@@ -7,6 +9,7 @@ import { Component, Input } from '@angular/core';
 })
 export class InputFieldComponent {
   WSUBTYPES = WIDGET_SUB_TYPES;
+  @Input() formgroup?: FormGroup;
   @Input() fieldType: String = this.WSUBTYPES.TEXT;
   @Input() classname: String = "";
   @Input() wrapperClassname: String = "";

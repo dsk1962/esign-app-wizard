@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, lastValueFrom } from 'rxjs';
-import { ActionRequest, EsignApplication } from '../model/esign-model.model';
+import { ActionRequest, EsignApplication, Option } from '../model/esign-model.model';
 import { FormGroup } from '@angular/forms';
 
 const endpoint = 'http://localhost:8092/ecmsign/';
@@ -10,7 +10,10 @@ const endpoint = 'http://localhost:8092/ecmsign/';
   providedIn: 'root'
 })
 export class ApplicationServiceService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    var me = this;
+    setTimeout(function () { me.getApplicationOptions(); }, 100);
+  }
   private anEsignApplication: Subject<EsignApplication> = new Subject<EsignApplication>();
   public esignApplication = this.anEsignApplication.asObservable();
   private anErrorMessage: Subject<string> = new Subject<string>();    // consider putting the actual type of the data you will receive
@@ -18,10 +21,18 @@ export class ApplicationServiceService {
   private anInfoMessage: Subject<string> = new Subject<string>();    // consider putting the actual type of the data you will receive
   public infoMessage = this.anInfoMessage.asObservable();
 
-  private applicationHeaders: HttpHeaders = new HttpHeaders();
+  private anApplicationOptions: Subject<Option[]> = new Subject<Option[]>();    // consider putting the actual type of the data you will receive
+  public applicationOptions = this.anApplicationOptions.asObservable();
+
+  private applicationHeaders: HttpHeaders = new HttpHeaders().set("ApplicationId", "CBJCHBCAABAALcyDpww9YZlYuugnmLQpq0Tbqaicy6f3");
 
   setApplicationHeader(obj: any, name: string, value: string) {
     this.applicationHeaders = this.applicationHeaders.set(name, value);
+  }
+
+  getApplicationOptions(): void {
+    var me = this;
+    this.runAction("applications", (v: Option[]) => me.anApplicationOptions.next(v));
   }
 
   setErrorMessage(message: string) {

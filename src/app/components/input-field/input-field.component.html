@@ -1,4 +1,4 @@
-<div class="{{getWrapperClassName()}}">
+<div *ngIf="formgroup" class="{{getWrapperClassName()}}" [formGroup]="formgroup">
     <div class="{{getLabelClassName()}}" >
         <span>
             {{label}}
