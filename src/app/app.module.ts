@@ -3,14 +3,57 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { RouterModule } from '@angular/router';
+import { EsignApplicationComponent } from './components/esign-application/esign-application.component';
+import { EsignTemplateComponent } from './components/esign-template/esign-template.component';
+import { InputFieldComponent } from './components/input-field/input-field.component';
+import { CalendarModule } from 'primeng/calendar';
+import { BlockUIModule } from 'primeng/blockui';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { InputMaskModule } from 'primeng/inputmask';
+import { PasswordModule } from 'primeng/password';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EsignApplicationComponent,
+    EsignTemplateComponent,
+    InputFieldComponent
   ],
   imports: [
+    BrowserModule,RouterModule.forRoot([
+      {path: 'esign-application', component: EsignApplicationComponent},
+      {path: 'esign-template', component: EsignTemplateComponent},
+      {path: '', redirectTo: '/esign-application', pathMatch: 'full'}]),
+    AppRoutingModule,
+    BlockUIModule,
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    ButtonModule,
+    CalendarModule,
+    CheckboxModule,
+    DropdownModule,
+    FormsModule,
+    HttpClientModule,
+    InputMaskModule, 
+    InputNumberModule,
+    InputTextModule,
+    PasswordModule,
+    RadioButtonModule,
+    ReactiveFormsModule,
+    TableModule,
+    TooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

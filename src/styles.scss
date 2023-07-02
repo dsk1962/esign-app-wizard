@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/nova/theme.css";
+@import "primeng/resources/primeng.css";
+
+body {
+    font-family: var(--font-family);
+}
+
+
+.esign-inputfield-wrapper{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    vertical-align: middle;
+    padding-bottom: 8px;
+}
+
+.esign-inputfield-label{
+    min-width: 100px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.esign-page{
+    padding:10px;
+    width:1000px;
+}
+
+.esign-inputfield-wrapper .p-inputwrapper,.p-component{
+    width: 100%;
+}
+
+.esign-label-required {
+    color: red;
+}
+
+.esign-application .esign-inputfield-label{
+    min-width: 200px;
+}
