@@ -1,18 +1,22 @@
 import { HttpParams } from '@angular/common/http';
 
 export class EsignApplication {
-    id : string='';
-    serviceAccount : string='';
-    refreshToken : string='';
+    id: string = '';
+    serviceAccount: string = '';
+    refreshToken: string = '';
 }
 
 export class EsignTemplate {
-    id : string='';
+    id: string = '';
+    p8Archive: boolean = false;
+    p8DocumentClass: string = '';
+    notificationRequired: boolean = false;
+    notificationEndpoint: string = '';
 }
 
 export class Option {
-    id : string='';
-    name : string='';
+    id: string = '';
+    name: string = '';
 }
 
 export class ActionRequest {
@@ -25,3 +29,4 @@ export class ActionRequest {
             }
     }
 }
+

@@ -26,10 +26,13 @@ export class InputFieldComponent {
   @Input() optionValue: string = "id";
   @Input() options: object[] = [];
   @Input() rows: string = "";
+  @Input() checked: boolean = false;
+  
 
   @Input() required: string = "false";
   @Input() readonly: string = "false";
   @Input() onchange: (value: any) => any = () => { };
+  @Input() onclick: (value: any) => any = () => { };
 
   getClassName(): string {
     return "esign-inputfield " + this.classname;

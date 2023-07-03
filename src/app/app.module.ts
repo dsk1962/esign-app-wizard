@@ -20,21 +20,25 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { TreeModule } from 'primeng/tree';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { EsignTemplateP8Component } from './components/esign-template-p8/esign-template-p8.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EsignApplicationComponent,
     EsignTemplateComponent,
-    InputFieldComponent
+    InputFieldComponent,
+    EsignTemplateP8Component
   ],
   imports: [
     BrowserModule,RouterModule.forRoot([
       {path: 'esign-application', component: EsignApplicationComponent},
       {path: 'esign-template', component: EsignTemplateComponent},
+      {path: 'esign-template-p8', component: EsignTemplateP8Component},
       {path: '', redirectTo: '/esign-application', pathMatch: 'full'}]),
     AppRoutingModule,
     BlockUIModule,
@@ -53,6 +57,7 @@ import { HttpClientModule } from '@angular/common/http';
     RadioButtonModule,
     ReactiveFormsModule,
     TableModule,
+    TreeModule,
     TooltipModule
   ],
   providers: [],

@@ -6,13 +6,12 @@ body {
     font-family: var(--font-family);
 }
 
-
 .esign-inputfield-wrapper{
     display: flex;
     flex-direction: row;
     flex: 1;
     vertical-align: middle;
-    padding-bottom: 8px;
+    padding-top: 8px;
 }
 
 .esign-inputfield-label{
@@ -40,6 +39,7 @@ body {
 }
 
 .esign-toolbar{
+    margin-top: 10px;;
     justify-content: right;
     display: flex;
     flex-direction: row;
@@ -48,4 +48,25 @@ body {
 .esign-toolbar p-button{
     width:90px;
     margin-left: 10px;
+}
+
+.esign-template-p8 p-tree{
+    max-height: 500px;
+    display: block;
+    overflow: auto;
+}
+
+.esign-page p-tree{
+    padding-top:8px;
+}
+
+.esign-template-p8 .esign-inputfield-label{
+    min-width: 160px;
+}
+.esign-inline-button{
+    display:flex;
+    flex-direction: column; 
+    justify-content: center;
+    padding-top: 8px;
+    padding-left: 8px;
 }

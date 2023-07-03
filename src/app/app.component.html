@@ -1,16 +1,13 @@
 <p-blockUI [blocked]="blockedDocument"><i class="pi pi-lock" style="font-size: 3rem"></i></p-blockUI>
 <nav>
-  <a class="button"
-     routerLink="/esign-application"
-     routerLinkActive="activebutton"
-     ariaCurrentWhenActive="page">
+  <a class="button" routerLink="/esign-application" routerLinkActive="activebutton" ariaCurrentWhenActive="page">
     Application
   </a> |
-  <a class="button"
-     routerLink="/esign-template"
-     routerLinkActive="activebutton"
-     ariaCurrentWhenActive="page">
+  <a class="button" routerLink="/esign-template" routerLinkActive="activebutton" ariaCurrentWhenActive="page">
     Template
+  </a> |
+  <a class="button" routerLink="/esign-template-p8" routerLinkActive="activebutton" ariaCurrentWhenActive="page">
+    P8 Archival
   </a>
 </nav>
 <router-outlet></router-outlet>

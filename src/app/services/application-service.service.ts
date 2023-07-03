@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, lastValueFrom } from 'rxjs';
-import { ActionRequest, EsignApplication, Option } from '../model/esign-model.model';
+import { ActionRequest, EsignApplication, EsignTemplate, Option } from '../model/esign-model.model';
 import { FormGroup } from '@angular/forms';
 
 const endpoint = 'http://localhost:8092/ecmsign/';
@@ -22,6 +22,7 @@ export class ApplicationServiceService {
   private applicationHeaders: HttpHeaders = new HttpHeaders();
   public applicationId: string = '';
   public templateId: string = '';
+  public template : EsignTemplate = new EsignTemplate();
 
   setApplicationHeader(obj: any, name: string, value: string) {
     this.applicationHeaders = this.applicationHeaders.set(name, value);
@@ -40,6 +41,11 @@ export class ApplicationServiceService {
   getTemplateOptions(successHandler: any): void {
     var me = this;
     this.runAction("templates", (v: Option[]) => successHandler(v));
+  }
+
+  getP8DocumentClasses(successHandler: any): void {
+    var me = this;
+    this.runAction("p8/documentclass/tree", (v: Option[]) => successHandler(v));
   }
 
   setErrorMessage(message: string) {

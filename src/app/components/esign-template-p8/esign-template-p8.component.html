@@ -1,0 +1,23 @@
+<form [formGroup]="formgroup">
+    <div class="esign-page esign-template-p8">
+        <esign-input-field [formgroup]="formgroup" name="p8Archive" label="P8 Archival" fieldType="checkbox"
+            [checked]="applicationServiceService.template.p8Archive" [onchange]="onP8ArchiveChange"></esign-input-field>
+        <div *ngIf="p8ArchiveOn" >
+            <div *ngIf="!showSelector" style="display:flex;flex-direction: row; justify-content: center;">
+                <esign-input-field [formgroup]="formgroup" label="P8 Document Class" name="p8DocumentClassLabel"
+                    readonly=true style="flex:1"></esign-input-field>
+                <div class="esign-inline-button">
+                    <p-button label="Select" type="button" (click)="showDocClassSelector()"></p-button>
+                </div>
+            </div>
+            <p-tree *ngIf="showSelector" #classTree [value]="p8Documents" class="w-full md:w-30rem"
+                selectionMode="single" [(selection)]="selectedClass" visible="false"
+                (onNodeSelect)="onDocClassSelection($event)"></p-tree>
+        </div>
+        <div class="esign-toolbar">
+            <p-button *ngIf="showSelector" label="Close" type="button" (click)="hideDocClassSelector()"></p-button>
+            <p-button label="Previous" type="button" (click)="onPrevious()"></p-button>
+            <p-button label="Next" type="button" (click)="onNext()"></p-button>
+        </div>
+    </div>
+</form>

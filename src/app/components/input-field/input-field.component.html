@@ -8,50 +8,50 @@
     <ng-container [ngSwitch]="fieldType">
         <ng-container *ngSwitchCase="WSUBTYPES.CHECKBOX">
             <p-checkbox class="{{getClassName()}}" [readonly]="isReadOnly()" [pTooltip]="tooltip"
-                [formControlName]="name"></p-checkbox>
+                [formControlName]="name" (onChange)="onchange($event)" value="true" (onClick)="onclick($event)"></p-checkbox>
         </ng-container>
         <ng-container *ngSwitchCase="WSUBTYPES.HIDDEN">
             <input type="hidden" [formControlName]="name"
                 [value]="initValue">
         </ng-container>
         <ng-container *ngSwitchCase="WSUBTYPES.DISPLAY">
-            <div [innerHtml]="initValue"></div>
+            <div [innerHtml]="initValue" (onClick)="onclick($event)"></div>
         </ng-container>
         <ng-container *ngSwitchCase="WSUBTYPES.DATE">
-            <p-calendar class="{{getClassName()}}" [showIcon]="true" [name]="name" [required]="isRequired()"
+            <p-calendar class="{{getClassName()}}" [showIcon]="true" [name]="name" [required]="isRequired()" (onChange)="onchange($event)"
                 [pTooltip]="tooltip" [formControlName]="name"
-                [placeholder]="placeHolder"></p-calendar>
+                [placeholder]="placeHolder" (onClick)="onclick($event)"></p-calendar>
         </ng-container>
         <ng-container *ngSwitchCase="WSUBTYPES.MASK">
-            <p-inputMask [mask]="mask" [placeholder]="placeHolder" [required]="isRequired()"
+            <p-inputMask [mask]="mask" [placeholder]="placeHolder" [required]="isRequired()" (onChange)="onchange($event)"
                 [readonly]="isReadOnly()" [pTooltip]="tooltip" class="{{getClassName()}}"
-                [formControlName]="name"></p-inputMask>
+                [formControlName]="name" (onClick)="onclick($event)"></p-inputMask>
         </ng-container>
         <ng-container *ngSwitchCase="WSUBTYPES.NUMERIC">
             <p-inputNumber class="{{getClassName()}}" [showButtons]="true" [pTooltip]="tooltip" [required]="isRequired()"
-                [formControlName]="name" [placeholder]="placeHolder"
-                [readonly]="isReadOnly()"></p-inputNumber>
+                [formControlName]="name" [placeholder]="placeHolder" (onChange)="onchange($event)"
+                [readonly]="isReadOnly()" (onClick)="onclick($event)"></p-inputNumber>
         </ng-container>
         <ng-container *ngSwitchCase="WSUBTYPES.PASSWORD">
             <p-password class="{{getClassName()}}" [placeholder]="placeHolder" class="{{getClassName()}}" [required]="isRequired()"
-                [pTooltip]="tooltip" [toggleMask]="true"
-                [formControlName]="name"></p-password>
+                [pTooltip]="tooltip" [toggleMask]="true" (onChange)="onchange($event)"
+                [formControlName]="name" (onClick)="onclick($event)"></p-password>
         </ng-container>
         <ng-container *ngSwitchCase="WSUBTYPES.TEXTAREA">
-            <textarea class="{{getClassName()}}" [rows]="rows" [required]="isRequired()"
+            <textarea class="{{getClassName()}}" [rows]="rows" [required]="isRequired()" (onChange)="onchange($event)"
                 [readonly]="isReadOnly()" [pTooltip]="tooltip" pInputTextarea
-                [placeholder]="placeHolder" [formControlName]="name"></textarea>
+                [placeholder]="placeHolder" [formControlName]="name" (onClick)="onclick($event)"></textarea>
         </ng-container>
         <ng-container *ngSwitchCase="WSUBTYPES.COMBOBOX">
             <p-dropdown [options]="options" [optionLabel]="optionLabel" [required]="isRequired()"
                 [readonly]="isReadOnly()" [pTooltip]="tooltip"
                 [optionValue]="optionValue" [placeholder]="placeHolder"
-                [formControlName]="name" (onChange)="onchange($event)"></p-dropdown>
+                [formControlName]="name" (onChange)="onchange($event)" (onClick)="onclick($event)"></p-dropdown>
         </ng-container>
         <ng-container *ngSwitchDefault>
             <input class="{{getClassName()}}" pInputText type="text" [required]="isRequired()"
                 [attr.readonly]="isReadOnly()" [pTooltip]="tooltip" [placeholder]="placeHolder"
-                [formControlName]="name" [pattern]="pattern">
+                [formControlName]="name" [pattern]="pattern" (onChange)="onchange($event)" (onClick)="onclick($event)">
         </ng-container>
     </ng-container>
 </div>

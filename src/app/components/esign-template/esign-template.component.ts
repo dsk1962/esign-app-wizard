@@ -28,7 +28,7 @@ export class EsignTemplateComponent {
   }
 
   onNext = () => {
-    this.router.navigateByUrl("/esign-template");
+    this.router.navigateByUrl("/esign-template-p8");
   }
   onPrevious = () => {
     this.router.navigateByUrl("/esign-application");
