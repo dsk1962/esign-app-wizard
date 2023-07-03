@@ -11,8 +11,6 @@ const endpoint = 'http://localhost:8092/ecmsign/';
 })
 export class ApplicationServiceService {
   constructor(private http: HttpClient) {
-    var me = this;
-    setTimeout(function () { me.getApplicationOptions(); }, 100);
   }
   private anEsignApplication: Subject<EsignApplication> = new Subject<EsignApplication>();
   public esignApplication = this.anEsignApplication.asObservable();
@@ -21,18 +19,27 @@ export class ApplicationServiceService {
   private anInfoMessage: Subject<string> = new Subject<string>();    // consider putting the actual type of the data you will receive
   public infoMessage = this.anInfoMessage.asObservable();
 
-  private anApplicationOptions: Subject<Option[]> = new Subject<Option[]>();    // consider putting the actual type of the data you will receive
-  public applicationOptions = this.anApplicationOptions.asObservable();
-
-  private applicationHeaders: HttpHeaders = new HttpHeaders().set("ApplicationId", "CBJCHBCAABAALcyDpww9YZlYuugnmLQpq0Tbqaicy6f3");
+  private applicationHeaders: HttpHeaders = new HttpHeaders();
+  public applicationId: string = '';
+  public templateId: string = '';
 
   setApplicationHeader(obj: any, name: string, value: string) {
     this.applicationHeaders = this.applicationHeaders.set(name, value);
   }
 
-  getApplicationOptions(): void {
+  setApplicationHeaders(form : FormGroup) {
+    this.setApplicationHeader(null,"ApplicationId",form.controls["id"].value);
+    this.setApplicationHeader(null,"ServiceAccount",form.controls["serviceAccount"].value);
+  }
+
+  getApplicationOptions(successHandler: any): void {
     var me = this;
-    this.runAction("applications", (v: Option[]) => me.anApplicationOptions.next(v));
+    this.applicationHeaders = new HttpHeaders().set("ApplicationId", "CBJCHBCAABAALcyDpww9YZlYuugnmLQpq0Tbqaicy6f3");
+    this.runAction("applications", (v: Option[]) => successHandler(v));
+  }
+  getTemplateOptions(successHandler: any): void {
+    var me = this;
+    this.runAction("templates", (v: Option[]) => successHandler(v));
   }
 
   setErrorMessage(message: string) {

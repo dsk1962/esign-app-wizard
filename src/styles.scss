@@ -38,3 +38,14 @@ body {
 .esign-application .esign-inputfield-label{
     min-width: 200px;
 }
+
+.esign-toolbar{
+    justify-content: right;
+    display: flex;
+    flex-direction: row;
+}
+
+.esign-toolbar p-button{
+    width:90px;
+    margin-left: 10px;
+}
