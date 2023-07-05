@@ -4,7 +4,7 @@
             [options]="templateOptions" [onchange]="onTemplateChange"></esign-input-field>
         <div class="esign-toolbar">
             <p-button label="Previous" type="button" (click)="onPrevious()"></p-button>
-            <p-button label="Next" type="button" (click)="onNext()"></p-button>
+            <p-button label="Next" type="button" (click)="onNext()" [disabled]="!formgroup.valid"></p-button>
         </div>
     </div>
 </form>

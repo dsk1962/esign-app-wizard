@@ -50,7 +50,7 @@
         </ng-container>
         <ng-container *ngSwitchDefault>
             <input class="{{getClassName()}}" pInputText type="text" [required]="isRequired()"
-                [attr.readonly]="isReadOnly()" [pTooltip]="tooltip" [placeholder]="placeHolder"
+                [readonly]="isReadOnly()" [pTooltip]="tooltip" [placeholder]="placeHolder"
                 [formControlName]="name" [pattern]="pattern" (onChange)="onchange($event)" (onClick)="onclick($event)">
         </ng-container>
     </ng-container>

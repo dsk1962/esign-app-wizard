@@ -14,13 +14,12 @@ import { Tree } from 'primeng/tree';
 export class EsignTemplateP8Component {
   constructor(public applicationServiceService: ApplicationServiceService, private router: Router) {
   }
-  
-  @ViewChild('classTree') classTree? : Tree;
 
-  showSelector:boolean=false;
-  p8ArchiveOn:boolean=false;
+  @ViewChild('classTree') classTree?: Tree;
 
-  p8Documents: TreeNode[] = [];
+  showSelector: boolean = false;
+  p8ArchiveOn: boolean = false;
+
   selectedClass: TreeNode | TreeNode[] | null = null;
   formgroup = new FormGroup({
     p8Archive: new FormControl(''),
@@ -38,31 +37,50 @@ export class EsignTemplateP8Component {
     this.router.navigateByUrl("/esign-template");
   }
 
-  onDocClassSelection(ev: any){
+  onDocClassSelection(ev: any) {
     this.selectedClass = ev.node;
     this.hideDocClassSelector();
     this.setDocClassName(this.selectedClass);
   }
 
-  setDocClassName(v:any):void{
-    this.formgroup.controls["p8DocumentClassLabel"].setValue(v && v.label ? v.label:'');
+  useP8(): boolean {
+    return !this.applicationServiceService.esignTemplate?.p8Archive;
+  }
+
+  setDocClassName(v: any): void {
+    this.formgroup.controls["p8DocumentClassLabel"].setValue(v && v.label ? v.label : '');
   }
 
   setP8Documents = (v: TreeNode[]) => {
-    this.p8Documents = v;
-    this.selectedClass = v[0].children ? v[0].children[4]:null;
+    this.applicationServiceService.p8Documents = v;
+    this.selectedClass = v[0];
     this.setDocClassName(this.selectedClass);
   }
-  showDocClassSelector(){
-    this.showSelector=true;
+  showDocClassSelector() {
+    this.showSelector = true;
   }
-  
-  hideDocClassSelector(){
-    this.showSelector=false;
+
+  hideDocClassSelector() {
+    this.showSelector = false;
   }
   ngOnInit() {
     var me = this;
-    if (this.p8Documents.length == 0)
-      this.applicationServiceService.getP8DocumentClasses(this.setP8Documents);
+    if (this.applicationServiceService.hasValidApplication()) {
+      if (this.applicationServiceService.esignTemplate) {
+        if (this.applicationServiceService.p8Documents.length == 0)
+          this.applicationServiceService.getP8DocumentClasses(this.setP8Documents);
+      }
+      else {
+        setTimeout(() => {
+          this.router.navigateByUrl("/esign-template");
+        }, 10);
+
+      }
+    }
+    else {
+      setTimeout(() => {
+        this.router.navigateByUrl("/esign-application");
+      }, 10);
+    }
   }
 }

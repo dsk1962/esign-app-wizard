@@ -25,6 +25,8 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { EsignTemplateP8Component } from './components/esign-template-p8/esign-template-p8.component';
+import { EsignTemplateNotificationComponent } from './components/esign-template-notification/esign-template-notification.component';
+import { MessageAreaComponent } from './components/message-area/message-area.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { EsignTemplateP8Component } from './components/esign-template-p8/esign-t
     EsignApplicationComponent,
     EsignTemplateComponent,
     InputFieldComponent,
-    EsignTemplateP8Component
+    EsignTemplateP8Component,
+    EsignTemplateNotificationComponent,
+    MessageAreaComponent
   ],
   imports: [
     BrowserModule,RouterModule.forRoot([

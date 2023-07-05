@@ -10,9 +10,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./esign-application.component.scss']
 })
 export class EsignApplicationComponent {
-  constructor(private applicationServiceService: ApplicationServiceService, private router: Router) {
+  constructor(public applicationServiceService: ApplicationServiceService, private router: Router) {
   }
-  applicationOptions: Option[] = [];
 
   formgroup = new FormGroup({
     id: new FormControl(''),
@@ -37,10 +36,9 @@ export class EsignApplicationComponent {
   }
 
   onNext = () => {
-    if (this.formgroup.valid) {
-      this.applicationServiceService.setApplicationHeaders(this.formgroup);
-      this.router.navigateByUrl("/esign-template");
-    }
+    var me = this;
+    if (this.formgroup.valid)
+      this.applicationServiceService.saveEsignApplication(this.formgroup, () => { me.router.navigateByUrl("/esign-template"); });
   }
 
 
@@ -52,22 +50,28 @@ export class EsignApplicationComponent {
         refreshToken: app.refreshToken
       }
     );
-    this.applicationServiceService.applicationId = app.id;
+    this.applicationServiceService.setEsignApplication(app);
   }
 
   setApplicationOptions = (v: Option[]) => {
-    this.applicationOptions = v;
-    if (this.applicationOptions.length > 0) {
-      var appId = this.applicationOptions[0].id;
-      this.applicationOptions.forEach(option => { if (option.id == this.applicationServiceService.applicationId) { appId = this.applicationServiceService.applicationId; } });
-      this.applicationServiceService.applicationId = appId;
-      this.readApplication(appId);
+    this.applicationServiceService.applicationOptions = v;
+    if (this.applicationServiceService.applicationOptions.length > 0) {
+      var appId = this.applicationServiceService.applicationOptions[0].id;
+      this.applicationServiceService.applicationOptions.forEach(option => {
+        if (option.id == this.applicationServiceService.esignApplication?.id) { appId = this.applicationServiceService.esignApplication.id; }
+      });
+      if (appId == this.applicationServiceService.esignApplication?.id)
+        this.setApplication(this.applicationServiceService.esignApplication);
+      else
+        this.readApplication(appId);
     }
   }
 
   ngOnInit() {
     var me = this;
-    if (this.applicationOptions.length == 0)
+    if (this.applicationServiceService.applicationOptions.length == 0)
       this.applicationServiceService.getApplicationOptions(this.setApplicationOptions);
+    else
+      this.setApplicationOptions(this.applicationServiceService.applicationOptions);
   }
 }

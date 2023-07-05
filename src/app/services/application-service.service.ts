@@ -4,6 +4,7 @@ import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse, HttpResponse } 
 import { Observable, throwError, lastValueFrom } from 'rxjs';
 import { ActionRequest, EsignApplication, EsignTemplate, Option } from '../model/esign-model.model';
 import { FormGroup } from '@angular/forms';
+import { TreeNode } from 'primeng/api';
 
 const endpoint = 'http://localhost:8092/ecmsign/';
 @Injectable({
@@ -12,25 +13,42 @@ const endpoint = 'http://localhost:8092/ecmsign/';
 export class ApplicationServiceService {
   constructor(private http: HttpClient) {
   }
-  private anEsignApplication: Subject<EsignApplication> = new Subject<EsignApplication>();
-  public esignApplication = this.anEsignApplication.asObservable();
   private anErrorMessage: Subject<string> = new Subject<string>();    // consider putting the actual type of the data you will receive
   public errorMessage = this.anErrorMessage.asObservable();
   private anInfoMessage: Subject<string> = new Subject<string>();    // consider putting the actual type of the data you will receive
   public infoMessage = this.anInfoMessage.asObservable();
 
   private applicationHeaders: HttpHeaders = new HttpHeaders();
-  public applicationId: string = '';
-  public templateId: string = '';
-  public template : EsignTemplate = new EsignTemplate();
+  public esignApplication?: EsignApplication;
+  public esignTemplate?: EsignTemplate;
+  p8Documents: TreeNode[] = [];
+
+
+  applicationOptions: Option[] = [];
+
+  hasValidApplication(): boolean {
+    return !!this.esignApplication && !!this.esignApplication.refreshToken && !!this.esignApplication.serviceAccount;
+  }
 
   setApplicationHeader(obj: any, name: string, value: string) {
     this.applicationHeaders = this.applicationHeaders.set(name, value);
   }
 
-  setApplicationHeaders(form : FormGroup) {
-    this.setApplicationHeader(null,"ApplicationId",form.controls["id"].value);
-    this.setApplicationHeader(null,"ServiceAccount",form.controls["serviceAccount"].value);
+  setEsignApplication(app: EsignApplication): void {
+    this.esignApplication = app;
+    if (this.hasValidApplication()) {
+      this.setApplicationHeader(null, "ApplicationId", this.esignApplication.id);
+      this.setApplicationHeader(null, "ServiceAccount", this.esignApplication.serviceAccount);
+    }
+  }
+
+  setEsignTemplate(template: EsignTemplate): void {
+    this.esignTemplate = template;
+  }
+
+  saveEsignApplication(group: FormGroup, successHandler: any) {
+    var me = this;
+    this.postForm(group, "application", (v: EsignApplication) => { me.setEsignApplication(v); successHandler(v); });
   }
 
   getApplicationOptions(successHandler: any): void {
@@ -54,6 +72,22 @@ export class ApplicationServiceService {
 
   setInfoMessage(message: string) {
     this.anInfoMessage.next(message);
+  }
+
+  processErrorResponse(error: any) {
+    if (error) {
+      if (error.error && error.error.errorMessage) {
+        error = error.error;
+        if (error.errorCode)
+          this.setErrorMessage("Code: " + error.errorCode + ". Message: " + error.errorMessage);
+        else
+          this.setErrorMessage(error.errorMessage);
+      }
+      else if (error.message)
+        this.setErrorMessage(error.message);
+      else
+        this.setErrorMessage(error);
+    }
   }
 
   getStaticForm(obj: any, formName: string) {
@@ -100,7 +134,7 @@ export class ApplicationServiceService {
         },
         error: error => {
           this.setBlockUI(false);
-          this.setErrorMessage(error.message);
+          this.processErrorResponse(error);
           console.error('runAction error!', error);
         }
       });
@@ -128,7 +162,7 @@ export class ApplicationServiceService {
         },
         error: error => {
           this.setBlockUI(false);
-          this.setErrorMessage(error.message);
+          this.processErrorResponse(error);
           console.error('postBody error!', error);
         }
       });
@@ -162,14 +196,14 @@ export class ApplicationServiceService {
     this.runAction(request);
   }
 
-  postForm(obj: any, action: string) {
+  postForm(obj: any, action: string, successHandler?: any) {
     let fgroup;
     if (obj instanceof FormGroup)
       fgroup = obj;
     else if (obj.dynamicFormGroup)
       fgroup = obj.dynamicFormGroup as FormGroup;
     let values = fgroup?.value;
-    this.postBody(action, values);
+    this.postBody(action, values, successHandler);
   }
   getResource(name: String): Promise<string> {
     const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');

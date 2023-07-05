@@ -1,0 +1,11 @@
+<div class="message-container">
+    <div class="message-area" *ngIf="infoMessage">
+        <div class="info-message" [innerHtml]="infoMessage"></div>
+        <p-button icon="pi pi-times" styleClass="p-button-rounded p-button-danger p-button-text" (click)="clearInfoMessage()"></p-button>
+    </div>
+    <div class="message-area" *ngIf="errorMessage">
+        <div class="error-message" [innerHtml]="errorMessage">
+        </div>
+        <p-button icon="pi pi-times" styleClass="p-button-rounded p-button-danger p-button-text" (click)="clearErrorMessage()"></p-button>
+    </div>
+</div>

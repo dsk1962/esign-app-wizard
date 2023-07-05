@@ -1,6 +1,6 @@
 <form [formGroup]="formgroup">
     <div class="esign-page esign-application">
-        <esign-input-field [formgroup]="formgroup" required="true" [options]="applicationOptions" name="id"
+        <esign-input-field [formgroup]="formgroup" required="true" [options]="applicationServiceService.applicationOptions" name="id"
             label="Application" fieldType="combobox" [onchange]="onApplicationChange"></esign-input-field>
         <esign-input-field [formgroup]="formgroup" required="true" name="serviceAccount"
             label="Service Account"></esign-input-field>
