@@ -16,6 +16,7 @@ export class EsignApplicationComponent {
   formgroup = new FormGroup({
     id: new FormControl(''),
     serviceAccount: new FormControl(''),
+    applicationName: new FormControl(''),
     refreshToken: new FormControl(''),
   });
 
@@ -43,13 +44,7 @@ export class EsignApplicationComponent {
 
 
   setApplication(app: EsignApplication): void {
-    this.formgroup.patchValue(
-      {
-        id: app.id,
-        serviceAccount: app.serviceAccount,
-        refreshToken: app.refreshToken
-      }
-    );
+    this.formgroup.patchValue(app);
     this.applicationServiceService.setEsignApplication(app);
   }
 

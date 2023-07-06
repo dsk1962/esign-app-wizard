@@ -26,13 +26,31 @@ export class EsignTemplateComponent {
 
   readTemplate(id: string): void {
     var me = this;
-    this.applicationServiceService.runAction("templates/" + this.applicationServiceService.esignApplication?.id + '/' + id,
+    this.applicationServiceService.runAction("templates/" + id,
       (template: EsignTemplate) => { me.setTemplate(template) });
   }
 
   setTemplate(template: EsignTemplate): void {
-    this.formgroup.controls["id"].setValue(template.id);
-    this.applicationServiceService.setEsignTemplate(template);
+    var me = this;
+    if (!this.applicationServiceService.esignApplication || this.applicationServiceService.esignApplication.id == '') {
+      this.applicationServiceService.setErrorMessage("No application selected.");
+      setTimeout(() => {
+        me.router.navigateByUrl("/esign-application");
+      }, 10);
+    }
+    else {
+      if (!template.applicationId || template.applicationId == '')
+        template.applicationId = this.applicationServiceService.esignApplication.id;
+      if (template.applicationId != this.applicationServiceService.esignApplication.id) {
+        this.applicationServiceService.setErrorMessage("Application data error. This template is registred for another application.");
+        setTimeout(() => {
+          me.router.navigateByUrl("/esign-application");
+        }, 10);
+      }
+
+      this.formgroup.patchValue(template);
+      this.applicationServiceService.setEsignTemplate(template);
+    }
   }
 
 

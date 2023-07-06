@@ -18,7 +18,7 @@ export class ApplicationServiceService {
   private anInfoMessage: Subject<string> = new Subject<string>();    // consider putting the actual type of the data you will receive
   public infoMessage = this.anInfoMessage.asObservable();
 
-  private applicationHeaders: HttpHeaders = new HttpHeaders();
+  private applicationParameters: any = {};
   public esignApplication?: EsignApplication;
   public esignTemplate?: EsignTemplate;
   p8Documents: TreeNode[] = [];
@@ -30,15 +30,15 @@ export class ApplicationServiceService {
     return !!this.esignApplication && !!this.esignApplication.refreshToken && !!this.esignApplication.serviceAccount;
   }
 
-  setApplicationHeader(obj: any, name: string, value: string) {
-    this.applicationHeaders = this.applicationHeaders.set(name, value);
+  setApplicationParameter(obj: any, name: string, value: string) {
+    this.applicationParameters[name] = value;
   }
 
   setEsignApplication(app: EsignApplication): void {
     this.esignApplication = app;
     if (this.hasValidApplication()) {
-      this.setApplicationHeader(null, "ApplicationId", this.esignApplication.id);
-      this.setApplicationHeader(null, "ServiceAccount", this.esignApplication.serviceAccount);
+      this.setApplicationParameter(null, "ApplicationId", this.esignApplication.id);
+      this.setApplicationParameter(null, "ServiceAccount", this.esignApplication.serviceAccount);
     }
   }
 
@@ -53,7 +53,7 @@ export class ApplicationServiceService {
 
   getApplicationOptions(successHandler: any): void {
     var me = this;
-    this.applicationHeaders = new HttpHeaders().set("ApplicationId", "CBJCHBCAABAALcyDpww9YZlYuugnmLQpq0Tbqaicy6f3");
+    this.setApplicationParameter(null,"ApplicationId", "CBJCHBCAABAALcyDpww9YZlYuugnmLQpq0Tbqaicy6f3");
     this.runAction("applications", (v: Option[]) => successHandler(v));
   }
   getTemplateOptions(successHandler: any): void {
@@ -111,8 +111,10 @@ export class ApplicationServiceService {
       request.action = action;
     }
 
-    var params = request.parameters ? request.parameters : {};
-    var options = { "params": params, "headers": this.applicationHeaders };
+    var params = request.parameters || new HttpParams();
+    for( let k in this.applicationParameters)
+      params = params.append(k,this.applicationParameters[k]);
+    var options = { "params": params };
     this.http.get<any>(
       endpoint + request.action, options).subscribe({
         next: data => {
@@ -142,7 +144,10 @@ export class ApplicationServiceService {
 
   postBody(action: string, body: any, successHandler?: any): void {
     this.setBlockUI(true);
-    var options = { "headers": this.applicationHeaders };
+    var params = new HttpParams();
+    for( let k in this.applicationParameters)
+      params = params.append(k,this.applicationParameters[k]);
+    var options = { "params": params };
     this.http.post<any>(
       endpoint + action, body, options).subscribe({
         next: data => {

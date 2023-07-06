@@ -2,12 +2,15 @@ import { HttpParams } from '@angular/common/http';
 
 export class EsignApplication {
     id: string = '';
+    applicationName: string = '';
     serviceAccount: string = '';
     refreshToken: string = '';
 }
 
 export class EsignTemplate {
     id: string = '';
+    applicationId: string = '';
+    templateName: string = '';
     p8Archive: boolean = false;
     p8DocumentClass: string = '';
     notificationRequired: boolean = false;
