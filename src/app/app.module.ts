@@ -43,6 +43,7 @@ import { MessageAreaComponent } from './components/message-area/message-area.com
       {path: 'esign-application', component: EsignApplicationComponent},
       {path: 'esign-template', component: EsignTemplateComponent},
       {path: 'esign-template-p8', component: EsignTemplateP8Component},
+      {path: 'esign-template-notification', component: EsignTemplateNotificationComponent},
       {path: '', redirectTo: '/esign-application', pathMatch: 'full'}]),
     AppRoutingModule,
     BlockUIModule,

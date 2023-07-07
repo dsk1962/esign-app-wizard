@@ -13,7 +13,7 @@ export class EsignTemplate {
     templateName: string = '';
     p8Archive: string = '';
     p8DocumentClass: string = '';
-    notificationRequired: boolean = false;
+    notificationRequired: string = 'N';
     notificationEndpoint: string = '';
 }
 

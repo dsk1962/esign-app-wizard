@@ -3,24 +3,24 @@
         <esign-input-field [formgroup]="formgroup" name="id" fieldType="hiddenfield"></esign-input-field>
         <esign-input-field [formgroup]="formgroup" name="applicationId" fieldType="hiddenfield"></esign-input-field>
         <esign-input-field [formgroup]="formgroup" name="p8DocumentClass" fieldType="hiddenfield"></esign-input-field>
-        <esign-input-field [formgroup]="formgroup" name="p8Archive" label="P8 Archival" fieldType="combobox" [options]="p8ArchiveOptions"
-            [checked]="useP8()" [onchange]="onP8ArchiveChange"></esign-input-field>
-        <div *ngIf="p8ArchiveOn" >
+        <esign-input-field [formgroup]="formgroup" name="p8Archive" label="P8 Archival" fieldType="combobox"
+            [options]="applicationServiceService.yesNoOptions" ></esign-input-field>
+        <div *ngIf="formgroup.controls['p8Archive'].value=='Y'">
             <div *ngIf="!showSelector" style="display:flex;flex-direction: row; justify-content: center;">
-                <esign-input-field [formgroup]="formgroup" label="P8 Document Class" name="p8DocumentClassLabel" required="true" readonly="true"
-                    style="flex:1"></esign-input-field>
+                <esign-input-field [formgroup]="formgroup" label="P8 Document Class" name="p8DocumentClassLabel"
+                    required="true" readonly="true" style="flex:1"></esign-input-field>
                 <div class="esign-inline-button">
                     <p-button label="Select" type="button" (click)="showDocClassSelector()"></p-button>
                 </div>
             </div>
-            <p-tree *ngIf="showSelector" #classTree [value]="applicationServiceService.p8Documents" class="w-full md:w-30rem"
-                selectionMode="single" [(selection)]="selectedClass" visible="false"
+            <p-tree *ngIf="showSelector" #classTree [value]="applicationServiceService.p8Documents"
+                class="w-full md:w-30rem" selectionMode="single" [(selection)]="selectedClass" visible="false"
                 (onNodeSelect)="onDocClassSelection($event)"></p-tree>
         </div>
         <div class="esign-toolbar">
             <p-button *ngIf="showSelector" label="Close" type="button" (click)="hideDocClassSelector()"></p-button>
-            <p-button label="Previous" type="button" (click)="onPrevious()"></p-button>
-            <p-button label="Next" type="button" (click)="onNext()"  [disabled]="!formgroup.valid"></p-button>
+            <p-button label="Previous" type="button" (click)="onPrevious()" [disabled]="!formgroup.valid"></p-button>
+            <p-button label="Next" type="button" (click)="onNext()" [disabled]="!formgroup.valid"></p-button>
         </div>
     </div>
 </form>

@@ -26,6 +26,9 @@ export class ApplicationServiceService {
 
   applicationOptions: Option[] = [];
 
+  yesNoOptions: Option[] = [{ "id": "Y", "name": "Yes" }, { "id": "N", "name": "No" }];
+  
+
   hasValidApplication(): boolean {
     return !!this.esignApplication && !!this.esignApplication.refreshToken && !!this.esignApplication.serviceAccount;
   }
@@ -40,6 +43,22 @@ export class ApplicationServiceService {
       this.setApplicationParameter(null, "ApplicationId", this.esignApplication.id);
       this.setApplicationParameter(null, "ServiceAccount", this.esignApplication.serviceAccount);
     }
+  }
+
+  findByKey(tree: TreeNode[], key: string | null): TreeNode | undefined {
+    if (!key) return;
+    var node = tree.find(n => n.key == key);
+    tree.forEach(n => {
+      if (n.children) {
+        var v = this.findByKey(n.children, key);
+        n.expanded = false;
+        if (v) {
+          n.expanded = true;
+          node = v;
+        }
+      }
+    });
+    return node;
   }
 
   setEsignTemplate(template: EsignTemplate): void {
@@ -72,7 +91,7 @@ export class ApplicationServiceService {
 
   getP8DocumentClasses(successHandler: any): void {
     var me = this;
-    this.runAction("p8/documentclass/tree", (v: Option[]) => successHandler(v));
+    this.runAction("p8/documentclass/tree", (v: TreeNode[]) => { me.p8Documents = v; successHandler(v); });
   }
 
   setErrorMessage(message: string) {

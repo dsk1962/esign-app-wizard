@@ -15,10 +15,7 @@ export class EsignTemplateP8Component {
   constructor(public applicationServiceService: ApplicationServiceService, private router: Router) {
   }
 
-  @ViewChild('classTree') classTree?: Tree;
-
   showSelector: boolean = false;
-  p8ArchiveOptions: Option[] = [{"id":"Y","name":"Yes"},{"id":"N","name":"No"}];
   p8ArchiveOn: boolean = false;
   selectedClass: TreeNode | TreeNode[] | null = null;
   formgroup = new FormGroup({
@@ -29,41 +26,39 @@ export class EsignTemplateP8Component {
     p8DocumentClass: new FormControl('')
   });
 
-  onP8ArchiveChange = (ev: any) => {
-    this.p8ArchiveOn = ev.value == 'Y';
-  }
-
   onNext = () => {
     var me = this;
     if (this.formgroup.valid)
       this.applicationServiceService.saveEsignTemplate(this.formgroup,
-        () => { me.router.navigateByUrl("/esign-template-p8"); }
+        () => { me.router.navigateByUrl("/esign-template-notification"); }
       );
   }
   onPrevious = () => {
-    this.router.navigateByUrl("/esign-template");
+    var me = this;
+    if (this.formgroup.valid)
+      this.applicationServiceService.saveEsignTemplate(this.formgroup,
+        () => { me.router.navigateByUrl("/esign-template"); }
+      );
   }
 
   onDocClassSelection(ev: any) {
     this.selectedClass = ev.node;
     this.hideDocClassSelector();
+    this.applicationServiceService.findByKey(this.applicationServiceService.p8Documents, ev.node.key);
     this.setDocClass(this.selectedClass);
-  }
-
-  useP8(): boolean {
-    return this.applicationServiceService.esignTemplate?.p8Archive == 'Y';
   }
 
   setDocClass(v: any): void {
     this.formgroup.controls["p8DocumentClassLabel"].setValue(v && v.label ? v.label : '');
-    this.formgroup.controls["p8DocumentClass"].setValue(v && v.key ? v.key : '');
   }
 
-  setP8Documents = (v: TreeNode[]) => {
-    this.applicationServiceService.p8Documents = v;
-    this.selectedClass = v[0];
+  setP8Documents = () => {
+    var node = this.applicationServiceService.findByKey(this.applicationServiceService.p8Documents, this.formgroup.controls["p8DocumentClass"].value);
+    this.selectedClass = node ? node : this.applicationServiceService.p8Documents[0];
     this.setDocClass(this.selectedClass);
   }
+
+
   showDocClassSelector() {
     this.showSelector = true;
   }
@@ -75,9 +70,13 @@ export class EsignTemplateP8Component {
     var me = this;
     if (this.applicationServiceService.hasValidApplication()) {
       if (this.applicationServiceService.esignTemplate) {
+        if (this.applicationServiceService.esignTemplate.p8Archive != 'Y')
+          this.applicationServiceService.esignTemplate.p8Archive = 'N';
         this.formgroup.patchValue(this.applicationServiceService.esignTemplate);
         if (this.applicationServiceService.p8Documents.length == 0)
           this.applicationServiceService.getP8DocumentClasses(this.setP8Documents);
+        else
+          this.setP8Documents();
       }
       else {
         setTimeout(() => {
