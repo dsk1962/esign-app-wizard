@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, lastValueFrom } from 'rxjs';
 import { ActionRequest, EsignApplication, EsignTemplate, Option } from '../model/esign-model.model';
 import { FormGroup } from '@angular/forms';
@@ -48,12 +48,21 @@ export class ApplicationServiceService {
 
   saveEsignApplication(group: FormGroup, successHandler: any) {
     var me = this;
-    this.postForm(group, "application", (v: EsignApplication) => { me.setEsignApplication(v); successHandler(v); });
+    this.postForm(group, "application",
+      (v: EsignApplication) => { me.setEsignApplication(v); successHandler(v); }
+    );
+  }
+
+  saveEsignTemplate(group: FormGroup, successHandler: any) {
+    var me = this;
+    this.postForm(group, "templates/template",
+      (v: EsignTemplate) => { me.setEsignTemplate(v); successHandler(v); }
+    );
   }
 
   getApplicationOptions(successHandler: any): void {
     var me = this;
-    this.setApplicationParameter(null,"ApplicationId", "CBJCHBCAABAALcyDpww9YZlYuugnmLQpq0Tbqaicy6f3");
+    this.setApplicationParameter(null, "ApplicationId", "CBJCHBCAABAALcyDpww9YZlYuugnmLQpq0Tbqaicy6f3");
     this.runAction("applications", (v: Option[]) => successHandler(v));
   }
   getTemplateOptions(successHandler: any): void {
@@ -112,8 +121,8 @@ export class ApplicationServiceService {
     }
 
     var params = request.parameters || new HttpParams();
-    for( let k in this.applicationParameters)
-      params = params.append(k,this.applicationParameters[k]);
+    for (let k in this.applicationParameters)
+      params = params.append(k, this.applicationParameters[k]);
     var options = { "params": params };
     this.http.get<any>(
       endpoint + request.action, options).subscribe({
@@ -145,8 +154,8 @@ export class ApplicationServiceService {
   postBody(action: string, body: any, successHandler?: any): void {
     this.setBlockUI(true);
     var params = new HttpParams();
-    for( let k in this.applicationParameters)
-      params = params.append(k,this.applicationParameters[k]);
+    for (let k in this.applicationParameters)
+      params = params.append(k, this.applicationParameters[k]);
     var options = { "params": params };
     this.http.post<any>(
       endpoint + action, body, options).subscribe({

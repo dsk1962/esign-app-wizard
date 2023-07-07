@@ -17,6 +17,8 @@ export class EsignTemplateComponent {
   templateOptions: Option[] = [];
   formgroup = new FormGroup({
     id: new FormControl(''),
+    applicationId: new FormControl(''),
+    templateName: new FormControl(''),
   });
 
   onTemplateChange = (ev: any) => {
@@ -47,7 +49,10 @@ export class EsignTemplateComponent {
           me.router.navigateByUrl("/esign-application");
         }, 10);
       }
-
+      this.templateOptions.forEach(option => {
+        if (option.id == template.id)
+          template.templateName = option.name;
+      });
       this.formgroup.patchValue(template);
       this.applicationServiceService.setEsignTemplate(template);
     }
@@ -55,7 +60,11 @@ export class EsignTemplateComponent {
 
 
   onNext = () => {
-    this.router.navigateByUrl("/esign-template-p8");
+    var me = this;
+    if (this.formgroup.valid)
+      this.applicationServiceService.saveEsignTemplate(this.formgroup,
+        () => { me.router.navigateByUrl("/esign-template-p8"); }
+      );
   }
   onPrevious = () => {
     this.router.navigateByUrl("/esign-application");

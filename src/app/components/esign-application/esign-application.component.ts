@@ -44,6 +44,9 @@ export class EsignApplicationComponent {
 
 
   setApplication(app: EsignApplication): void {
+    this.applicationServiceService.applicationOptions.forEach(option => {
+      if (option.id == app.id) { app.applicationName = option.name; }
+    });
     this.formgroup.patchValue(app);
     this.applicationServiceService.setEsignApplication(app);
   }

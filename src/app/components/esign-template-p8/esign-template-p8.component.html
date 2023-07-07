@@ -1,6 +1,9 @@
 <form [formGroup]="formgroup">
     <div class="esign-page esign-template-p8">
-        <esign-input-field [formgroup]="formgroup" name="p8Archive" label="P8 Archival" fieldType="checkbox"
+        <esign-input-field [formgroup]="formgroup" name="id" fieldType="hiddenfield"></esign-input-field>
+        <esign-input-field [formgroup]="formgroup" name="applicationId" fieldType="hiddenfield"></esign-input-field>
+        <esign-input-field [formgroup]="formgroup" name="p8DocumentClass" fieldType="hiddenfield"></esign-input-field>
+        <esign-input-field [formgroup]="formgroup" name="p8Archive" label="P8 Archival" fieldType="combobox" [options]="p8ArchiveOptions"
             [checked]="useP8()" [onchange]="onP8ArchiveChange"></esign-input-field>
         <div *ngIf="p8ArchiveOn" >
             <div *ngIf="!showSelector" style="display:flex;flex-direction: row; justify-content: center;">

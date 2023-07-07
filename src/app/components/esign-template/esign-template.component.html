@@ -1,5 +1,7 @@
 <form [formGroup]="formgroup">
     <div class="esign-page esign-template">
+        <esign-input-field [formgroup]="formgroup" name="applicationId" fieldType="hiddenfield"></esign-input-field>
+        <esign-input-field [formgroup]="formgroup" name="templateName" fieldType="hiddenfield"></esign-input-field>
         <esign-input-field [formgroup]="formgroup" required="true" name="id" label="Template" fieldType="combobox"
             [options]="templateOptions" [onchange]="onTemplateChange"></esign-input-field>
         <div class="esign-toolbar">

@@ -11,7 +11,7 @@ export class EsignTemplate {
     id: string = '';
     applicationId: string = '';
     templateName: string = '';
-    p8Archive: boolean = false;
+    p8Archive: string = '';
     p8DocumentClass: string = '';
     notificationRequired: boolean = false;
     notificationEndpoint: string = '';
