@@ -1,0 +1,24 @@
+<form [formGroup]="formgroup">
+    <div class="esign-page esign-template">
+        <div class="card ">
+            <div class="card-container">
+                <div class="flex p-10">
+                    <div class=" w-4  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">
+                        Template Field</div>
+                    <div class="w-4  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">
+                        Application Field</div>
+                    <div class="w-4  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">P8
+                        Property</div>
+                </div>
+                <div class="flex p-10" *ngFor="let fieldMap of fieldMapping">
+                    <div class=" w-4  text-gray-900 p-2 flex align-items-left justify-content-left">
+                        {{fieldMap.templateField}}</div>
+                    <div class="w-4  text-gray-900 font-bold p-2 flex align-items-left justify-content-center">
+                        Application Field</div>
+                    <div class="w-4  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">P8
+                        Property</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

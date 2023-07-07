@@ -22,6 +22,15 @@ export class Option {
     name: string = '';
 }
 
+export class EsignTemplateFieldMap {
+    templateId :string = '';
+	templateField: string = '';
+	applicationField: string = '';
+	p8Property: string = '';
+	p8DefaultValue: string = '';
+}
+
+
 export class ActionRequest {
     action?: string;
     parameters: HttpParams = new HttpParams();

@@ -27,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EsignTemplateP8Component } from './components/esign-template-p8/esign-template-p8.component';
 import { EsignTemplateNotificationComponent } from './components/esign-template-notification/esign-template-notification.component';
 import { MessageAreaComponent } from './components/message-area/message-area.component';
+import { EsignTemplateFieldmapComponent } from './components/esign-template-fieldmap/esign-template-fieldmap.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MessageAreaComponent } from './components/message-area/message-area.com
     InputFieldComponent,
     EsignTemplateP8Component,
     EsignTemplateNotificationComponent,
-    MessageAreaComponent
+    MessageAreaComponent,
+    EsignTemplateFieldmapComponent
   ],
   imports: [
     BrowserModule,RouterModule.forRoot([
@@ -44,6 +46,7 @@ import { MessageAreaComponent } from './components/message-area/message-area.com
       {path: 'esign-template', component: EsignTemplateComponent},
       {path: 'esign-template-p8', component: EsignTemplateP8Component},
       {path: 'esign-template-notification', component: EsignTemplateNotificationComponent},
+      {path: 'esign-template-fieldmap', component: EsignTemplateFieldmapComponent},
       {path: '', redirectTo: '/esign-application', pathMatch: 'full'}]),
     AppRoutingModule,
     BlockUIModule,
