@@ -23,9 +23,23 @@ export class EsignTemplateFieldmapComponent {
   onNext = () => {
     var me = this;
     if (this.formgroup.valid)
-      this.applicationServiceService.saveEsignTemplate(this.formgroup,
-        () => { me.router.navigateByUrl("/esign-template-notification"); }
-      );
+    this.submitData(() =>  me.router.navigateByUrl("/esign-template-notification"));
+  }
+
+  submitData(successHandler?: any):void{
+    var data = this.formgroup.value as any;
+    var result = [] as any;
+    var s = '';
+    Object.keys(data).forEach(key => {
+      if( key.startsWith("fp8n_"))
+      {
+        var v = new EsignTemplateFieldMap();
+        v.p8Property = data[key];
+        v.p8DefaultValue =  data['fp8nv_' +key.substring("fp8n_".length)];
+        result.push(v);
+      }
+    });
+    this.applicationServiceService.postBody("templates/teplatefieldmap/" + this.applicationServiceService.esignTemplate?.id,result,successHandler);
   }
 
   hasFormFields(): boolean {
@@ -61,9 +75,9 @@ export class EsignTemplateFieldmapComponent {
         this.formgroup.addControl('fappname_' + f.fieldIndex, new FormControl());
       }
       else {
-        this.formgroup.addControl('fp8n_' + f.fieldIndex++, new FormControl());
-        console.info("add " + 'fp8n_' + f.fieldIndex++);
-        this.formgroup.addControl('fp8nv_' + f.fieldIndex++, new FormControl());
+        this.formgroup.addControl('fp8n_' + f.fieldIndex, new FormControl(f.p8Property));
+        console.info("add " + 'fp8n_' + f.fieldIndex);
+        this.formgroup.addControl('fp8nv_' + f.fieldIndex, new FormControl(f.p8DefaultValue));
       }
     });
   }
