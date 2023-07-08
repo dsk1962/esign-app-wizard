@@ -23,11 +23,18 @@ body {
 }
 
 .esign-page{
+    margin-top: 20px;;
     padding:10px;
     width:1000px;
+    border: 1px solid #dcdcdc;
 }
 
 .esign-inputfield-wrapper .p-inputwrapper,.p-component{
+    width: 100%;
+}
+
+
+.esign-template-fieldmap .p-inputwrapper{
     width: 100%;
 }
 
@@ -52,6 +59,7 @@ body {
 }
 
 .esign-template-p8 p-tree{
+    width: 100% !important;
     max-height: 500px;
     display: block;
     overflow: auto;
@@ -108,4 +116,14 @@ body {
     padding-left: 10px;
     overflow: auto;
     color: red;
+}
+
+.esig-section-header{
+    font-size: 18px;
+    font-weight: bolder;
+    color: dimgray;
+}
+
+.esign-page-body{
+    min-height: 170px;
 }

@@ -17,6 +17,8 @@ export class ApplicationServiceService {
   public errorMessage = this.anErrorMessage.asObservable();
   private anInfoMessage: Subject<string> = new Subject<string>();    // consider putting the actual type of the data you will receive
   public infoMessage = this.anInfoMessage.asObservable();
+  private aBlockUI: Subject<boolean> = new Subject<boolean>();    // consider putting the actual type of the data you will receive
+  public blockUI = this.aBlockUI.asObservable();
 
   private applicationParameters: any = {};
   public esignApplication?: EsignApplication;
@@ -124,8 +126,6 @@ export class ApplicationServiceService {
     request.parameters = new HttpParams().append("formPath", formName);
     this.runAction(request);
   }
-  private aBlockUI: Subject<boolean> = new Subject<boolean>();    // consider putting the actual type of the data you will receive
-  public blockUI = this.aBlockUI.asObservable();
 
   setBlockUI(value: boolean) {
     this.aBlockUI.next(value);

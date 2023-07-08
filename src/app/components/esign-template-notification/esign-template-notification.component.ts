@@ -22,7 +22,7 @@ export class EsignTemplateNotificationComponent {
     var me = this;
     if (this.formgroup.valid)
       this.applicationServiceService.saveEsignTemplate(this.formgroup,
-        () => { me.router.navigateByUrl("/esign-template-notification"); }
+        () => { me.router.navigateByUrl("/esign-template-fieldmap"); }
       );
   }
   onPrevious = () => {

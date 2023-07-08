@@ -50,6 +50,7 @@ export class EsignTemplateP8Component {
 
   setDocClass(v: any): void {
     this.formgroup.controls["p8DocumentClassLabel"].setValue(v && v.label ? v.label : '');
+    this.formgroup.controls["p8DocumentClass"].setValue(v && v.key ? v.key : '');
   }
 
   setP8Documents = () => {

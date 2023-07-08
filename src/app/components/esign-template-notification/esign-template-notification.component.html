@@ -1,11 +1,13 @@
 <form [formGroup]="formgroup">
     <div class="esign-page esign-template-notification">
-        <esign-input-field [formgroup]="formgroup" name="id" fieldType="hiddenfield"></esign-input-field>
-        <esign-input-field [formgroup]="formgroup" name="applicationId" fieldType="hiddenfield"></esign-input-field>
-        <esign-input-field [formgroup]="formgroup" name="notificationRequired" label="Notification" fieldType="combobox"
-            [options]="applicationServiceService.yesNoOptions"></esign-input-field>
-        <esign-input-field *ngIf="formgroup.controls['notificationRequired'].value=='Y'" [formgroup]="formgroup"
-            label="Notification Endpoint" name="notificationEndpoint" required="true"></esign-input-field>
+        <div class="esign-page-body">
+            <esign-input-field [formgroup]="formgroup" name="id" fieldType="hiddenfield"></esign-input-field>
+            <esign-input-field [formgroup]="formgroup" name="applicationId" fieldType="hiddenfield"></esign-input-field>
+            <esign-input-field [formgroup]="formgroup" name="notificationRequired" label="Notification"
+                fieldType="combobox" [options]="applicationServiceService.yesNoOptions"></esign-input-field>
+            <esign-input-field *ngIf="formgroup.controls['notificationRequired'].value=='Y'" [formgroup]="formgroup"
+                label="Notification Endpoint" name="notificationEndpoint" required="true"></esign-input-field>
+        </div>
         <div class="esign-toolbar">
             <p-button label="Previous" type="button" (click)="onPrevious()" [disabled]="!formgroup.valid"></p-button>
             <p-button label="Next" type="button" (click)="onNext()" [disabled]="!formgroup.valid"></p-button>

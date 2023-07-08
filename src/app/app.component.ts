@@ -12,8 +12,6 @@ export class AppComponent {
       this.blockDocument(v);
     });
   }
-  
-
   title = 'esign-app-wizard';
   blockedDocumentCounter: number = 0;
   blockedDocument: boolean = false;

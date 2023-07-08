@@ -1,24 +1,66 @@
 <form [formGroup]="formgroup">
-    <div class="esign-page esign-template">
-        <div class="card ">
-            <div class="card-container">
-                <div class="flex p-10">
-                    <div class=" w-4  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">
-                        Template Field</div>
-                    <div class="w-4  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">
-                        Application Field</div>
-                    <div class="w-4  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">P8
-                        Property</div>
-                </div>
-                <div class="flex p-10" *ngFor="let fieldMap of fieldMapping">
-                    <div class=" w-4  text-gray-900 p-2 flex align-items-left justify-content-left">
-                        {{fieldMap.templateField}}</div>
-                    <div class="w-4  text-gray-900 font-bold p-2 flex align-items-left justify-content-center">
-                        Application Field</div>
-                    <div class="w-4  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">P8
-                        Property</div>
+    <div class="esign-page esign-template-fieldmap">
+        <div class="esign-page-body">
+            <div class="card " *ngIf="hasFormFields()">
+                <div class="card-container">
+                    <div class="flex">
+                        <div class=" w-4  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">
+                            Template Field</div>
+                        <div class="w-4  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">
+                            Application Field</div>
+                        <div class="w-4  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">P8
+                            Property</div>
+                    </div>
+                    <ng-container class="flex" *ngFor="let fieldMap of fieldMapping">
+                        <div class="flex" *ngIf="fieldMap.templateField">
+                            <input type="hidden" [formControlName]="'fname_' + fieldMap.fieldIndex" [value]="fieldMap.templateField">
+                            <div class=" w-4 p-2 flex align-items-left justify-content-left">
+                                {{fieldMap.templateField}}</div>
+                            <div class=" w-4 p-2  flex align-items-left justify-content-left">
+                                <input type="text" pInputText [formControlName]="'fappname_' + fieldMap.fieldIndex" />
+                            </div>
+                            <div class=" w-4 p-2 flex align-items-left justify-content-left">
+                                <p-dropdown [options]="p8Properties" optionLabel="name" optionValue="id"
+                                    [formControlName]="'fp8_' + fieldMap.fieldIndex"
+                                    *ngIf="applicationServiceService.esignTemplate && applicationServiceService.esignTemplate.p8Archive == 'Y'"></p-dropdown>
+                            </div>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
+            <div class="card"
+                *ngIf="applicationServiceService.esignTemplate && applicationServiceService.esignTemplate.p8Archive == 'Y'">
+                <div class="card-container">
+                    <div class="flex">
+                        <div class="w-6  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">P8
+                            Property</div>
+                        <div class="w-6  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">
+                            Default Value</div>
+                            <div class="flex w-min">
+                                <button pButton icon="pi pi-plus" (click)="addP8DefaultMap()"></button>
+                            </div>
+                            </div>
+                    <ng-container class="flex" *ngFor="let fieldMap of fieldMapping">
+                        <div class="flex" *ngIf="!fieldMap.templateField">
+                            <div class=" w-6 p-2 flex align-items-left justify-content-left">
+                                <p-dropdown [options]="p8Properties" optionLabel="name" optionValue="id"
+                                    [formControlName]="'fp8n_' + fieldMap.fieldIndex"
+                                    *ngIf="applicationServiceService.esignTemplate && applicationServiceService.esignTemplate.p8Archive == 'Y'"></p-dropdown>
+                            </div>
+                            <div class=" w-6 p-2  flex align-items-left justify-content-left">
+                                <input type="text" pInputText [formControlName]="'fp8nv_' + fieldMap.fieldIndex" />
+                            </div>
+                            <div class="flex flex-column justify-content-center w-min">
+                                <button pButton icon="pi pi-trash" (click)="removeP8DefaultMap(fieldMap.fieldIndex)"></button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="esign-toolbar">
+            <p-button label="Previous" type="button" (click)="onPrevious()" [disabled]="!formgroup.valid"></p-button>
+            <p-button label="Next" type="button" (click)="onNext()" [disabled]="!formgroup.valid"></p-button>
         </div>
     </div>
 </form>

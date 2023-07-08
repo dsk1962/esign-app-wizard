@@ -28,6 +28,7 @@ export class EsignTemplateFieldMap {
 	applicationField: string = '';
 	p8Property: string = '';
 	p8DefaultValue: string = '';
+    fieldIndex: number = 0;
 }
 
 

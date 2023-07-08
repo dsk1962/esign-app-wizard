@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EsignTemplateFieldMap, Option } from 'src/app/model/esign-model.model';
 import { ApplicationServiceService } from 'src/app/services/application-service.service';
@@ -16,6 +16,7 @@ export class EsignTemplateFieldmapComponent {
   });
 
   fieldMapping: EsignTemplateFieldMap[] = [];
+  fieldIndex: number = 0;
 
   p8Properties: Option[] = [];
 
@@ -27,10 +28,52 @@ export class EsignTemplateFieldmapComponent {
       );
   }
 
+  hasFormFields(): boolean {
+    var c = false;
+    return !!this.fieldMapping.find(fm => !!fm.templateField);
+  }
+
+  addP8DefaultMap(): void {
+    this.fieldIndex++;
+    var v = new EsignTemplateFieldMap();
+    v.fieldIndex = this.fieldIndex++;
+    this.fieldMapping.push(v);
+    this.formgroup.addControl('fp8n_' + v.fieldIndex, new FormControl());
+    this.formgroup.addControl('fp8nv_' + v.fieldIndex, new FormControl());
+  }
+
+  removeP8DefaultMap(index: number): void {
+    var entry = this.fieldMapping.find(fm => fm.fieldIndex == index);
+    if (entry) {
+      this.fieldMapping.splice(this.fieldMapping.indexOf(entry), 1);
+      this.formgroup.removeControl('fp8n_' + index);
+      this.formgroup.removeControl('fp8nv_' + index);
+    }
+  }
+
+  setFieldMap = (map: EsignTemplateFieldMap[]) => {
+    this.fieldMapping = map;
+    this.fieldMapping.forEach(f => {
+      f.fieldIndex = this.fieldIndex++;
+      if (f.templateField) {
+        this.formgroup.addControl('fname_' + f.fieldIndex, new FormControl());
+        this.formgroup.addControl('fp8_' + f.fieldIndex, new FormControl());
+        this.formgroup.addControl('fappname_' + f.fieldIndex, new FormControl());
+      }
+      else {
+        this.formgroup.addControl('fp8n_' + f.fieldIndex++, new FormControl());
+        console.info("add " + 'fp8n_' + f.fieldIndex++);
+        this.formgroup.addControl('fp8nv_' + f.fieldIndex++, new FormControl());
+      }
+    });
+  }
+
   readFieldMapping(id: string): void {
     var me = this;
-    this.applicationServiceService.runAction("templates/teplatefieldmap/" + id,
-      (map: EsignTemplateFieldMap[]) => { me.fieldMapping = map; });
+    this.applicationServiceService.runAction("templates/teplatefieldmap/" + id, this.setFieldMap);
+    if (this.applicationServiceService.esignTemplate?.p8Archive == 'Y' && this.p8Properties.length == 0)
+      this.applicationServiceService.runAction("p8/documentclass/" + this.applicationServiceService.esignTemplate.p8DocumentClass + "/propertydefinitions",
+        (v: Option[]) => { me.p8Properties = v; me.p8Properties.unshift({ id: '', name: 'Not Set' }) });
   }
 
   onPrevious = () => {
@@ -42,6 +85,7 @@ export class EsignTemplateFieldmapComponent {
   }
   ngOnInit() {
     var me = this;
+    console.log("oninit");
     if (this.applicationServiceService.hasValidApplication()) {
       if (this.applicationServiceService.esignTemplate) {
         if (this.fieldMapping.length == 0)
