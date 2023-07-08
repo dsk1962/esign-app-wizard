@@ -23,23 +23,29 @@ export class EsignTemplateFieldmapComponent {
   onNext = () => {
     var me = this;
     if (this.formgroup.valid)
-    this.submitData(() =>  me.router.navigateByUrl("/esign-template-notification"));
+      this.submitData(() => me.router.navigateByUrl("/esign-template-notification"));
   }
 
-  submitData(successHandler?: any):void{
+  submitData(successHandler?: any): void {
     var data = this.formgroup.value as any;
     var result = [] as any;
     var s = '';
     Object.keys(data).forEach(key => {
-      if( key.startsWith("fp8n_"))
-      {
+      if (key.startsWith("fp8n_")) {
         var v = new EsignTemplateFieldMap();
         v.p8Property = data[key];
-        v.p8DefaultValue =  data['fp8nv_' +key.substring("fp8n_".length)];
+        v.p8DefaultValue = data['fp8nv_' + key.substring("fp8n_".length)];
+        result.push(v);
+      }
+      else if (key.startsWith("fname_")) {
+        var v = new EsignTemplateFieldMap();
+        v.templateField = data[key];
+        v.applicationField = data['fappname_' + key.substring("fname_".length)];
+        v.p8Property = data['fp8_' + key.substring("fname_".length)];
         result.push(v);
       }
     });
-    this.applicationServiceService.postBody("templates/teplatefieldmap/" + this.applicationServiceService.esignTemplate?.id,result,successHandler);
+    this.applicationServiceService.postBody("templates/teplatefieldmap/" + this.applicationServiceService.esignTemplate?.id, result, successHandler);
   }
 
   hasFormFields(): boolean {
@@ -70,9 +76,9 @@ export class EsignTemplateFieldmapComponent {
     this.fieldMapping.forEach(f => {
       f.fieldIndex = this.fieldIndex++;
       if (f.templateField) {
-        this.formgroup.addControl('fname_' + f.fieldIndex, new FormControl());
-        this.formgroup.addControl('fp8_' + f.fieldIndex, new FormControl());
-        this.formgroup.addControl('fappname_' + f.fieldIndex, new FormControl());
+        this.formgroup.addControl('fname_' + f.fieldIndex, new FormControl(f.templateField));
+        this.formgroup.addControl('fp8_' + f.fieldIndex, new FormControl(f.p8Property));
+        this.formgroup.addControl('fappname_' + f.fieldIndex, new FormControl(f.applicationField));
       }
       else {
         this.formgroup.addControl('fp8n_' + f.fieldIndex, new FormControl(f.p8Property));
