@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { EsignApplication, Option } from 'src/app/model/esign-model.model';
 import { ApplicationServiceService } from 'src/app/services/application-service.service';
-import { FormGroup, FormControl, FormBuilder, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, AbstractControl, ValidatorFn, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,10 +14,10 @@ export class EsignApplicationComponent {
   }
 
   formgroup = new FormGroup({
-    id: new FormControl(''),
-    serviceAccount: new FormControl(''),
+    id: new FormControl('',Validators.maxLength(64)),
+    serviceAccount: new FormControl('',Validators.maxLength(32)),
     applicationName: new FormControl(''),
-    refreshToken: new FormControl(''),
+    refreshToken: new FormControl('',Validators.maxLength(256)),
   });
 
   readApplication(id: string): void {

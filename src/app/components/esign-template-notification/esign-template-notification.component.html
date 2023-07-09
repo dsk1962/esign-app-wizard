@@ -5,8 +5,8 @@
             <esign-input-field [formgroup]="formgroup" name="applicationId" fieldType="hiddenfield"></esign-input-field>
             <esign-input-field [formgroup]="formgroup" name="notificationRequired" label="Notification"
                 fieldType="combobox" [options]="applicationServiceService.yesNoOptions"></esign-input-field>
-            <esign-input-field *ngIf="formgroup.controls['notificationRequired'].value=='Y'" [formgroup]="formgroup"
-                label="Notification Endpoint" name="notificationEndpoint" required="true"></esign-input-field>
+            <esign-input-field [formgroup]="formgroup" [fieldType]="formgroup.controls['notificationRequired'].value=='Y' ? '':'hiddenfield'"
+                label="Notification Endpoint" name="notificationEndpoint" [required]="formgroup.controls['notificationRequired'].value=='Y'"></esign-input-field>
         </div>
         <div class="esign-toolbar">
             <p-button label="Previous" type="button" (click)="onPrevious()" [disabled]="!formgroup.valid"></p-button>

@@ -13,45 +13,53 @@
                     </div>
                     <ng-container class="flex" *ngFor="let fieldMap of fieldMapping">
                         <div class="flex" *ngIf="fieldMap.templateField">
-                            <input type="hidden" [formControlName]="'fname_' + fieldMap.fieldIndex" [value]="fieldMap.templateField">
-                            <div class=" w-4 p-2 flex align-items-left justify-content-left">
-                                {{fieldMap.templateField}}</div>
-                            <div class=" w-4 p-2  flex align-items-left justify-content-left">
-                                <input type="text" pInputText [formControlName]="'fappname_' + fieldMap.fieldIndex" />
+                            <div class=" w-4 p-1 flex align-items-left justify-content-left">
+                                <esign-input-field [formgroup]="formgroup" [name]="'fname_' + fieldMap.fieldIndex"
+                                    fieldType="hiddenfield"></esign-input-field>
+                                <div class="flex flex-column justify-content-center">{{fieldMap.templateField}}</div>
+                                </div>
+                                <div class=" w-4 p-1  flex align-items-left justify-content-left">
+                                    <esign-input-field class="w-full" [formgroup]="formgroup"
+                                        [name]="'fappname_' + fieldMap.fieldIndex"></esign-input-field>
+                                </div>
+                                <div class=" w-4 p-1 flex align-items-left justify-content-left">
+                                    <esign-input-field class="w-full"
+                                        *ngIf="applicationServiceService.esignTemplate && applicationServiceService.esignTemplate.p8Archive == 'Y'"
+                                        [formgroup]="formgroup" [options]="p8Properties"
+                                        [name]="'fp8_' + fieldMap.fieldIndex" fieldType="combobox"></esign-input-field>
+                                </div>
                             </div>
-                            <div class=" w-4 p-2 flex align-items-left justify-content-left">
-                                <p-dropdown [options]="p8Properties" optionLabel="name" optionValue="id"
-                                    [formControlName]="'fp8_' + fieldMap.fieldIndex"
-                                    *ngIf="applicationServiceService.esignTemplate && applicationServiceService.esignTemplate.p8Archive == 'Y'"></p-dropdown>
-                            </div>
-                        </div>
                     </ng-container>
                 </div>
             </div>
             <div class="card"
                 *ngIf="applicationServiceService.esignTemplate && applicationServiceService.esignTemplate.p8Archive == 'Y'">
+                <div class="mt-4" *ngIf="hasFormFields()"></div>
                 <div class="card-container">
                     <div class="flex">
-                        <div class="w-6  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">P8
-                            Property</div>
                         <div class="w-6  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">
-                            Default Value</div>
-                            <div class="flex w-min">
-                                <button pButton icon="pi pi-plus" (click)="addP8DefaultMap()"></button>
-                            </div>
-                            </div>
+                            <span class="esign-label-required pr-1">*</span>P8 Property
+                        </div>
+                        <div class="w-6  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">
+                            <span class="esign-label-required pr-1">*</span>Default Value
+                        </div>
+                        <div class="flex w-min">
+                            <button pButton icon="pi pi-plus" (click)="addP8DefaultMap()"></button>
+                        </div>
+                    </div>
                     <ng-container class="flex" *ngFor="let fieldMap of fieldMapping">
                         <div class="flex" *ngIf="!fieldMap.templateField">
-                            <div class=" w-6 p-2 flex align-items-left justify-content-left">
-                                <p-dropdown [options]="p8Properties" optionLabel="name" optionValue="id"
-                                    [formControlName]="'fp8n_' + fieldMap.fieldIndex"
-                                    *ngIf="applicationServiceService.esignTemplate && applicationServiceService.esignTemplate.p8Archive == 'Y'"></p-dropdown>
+                            <div class=" w-6 p-1 flex align-items-left justify-content-left">
+                                <esign-input-field class="w-full" [formgroup]="formgroup" [options]="p8Properties"
+                                    [name]="'fp8n_' + fieldMap.fieldIndex" fieldType="combobox"></esign-input-field>
                             </div>
-                            <div class=" w-6 p-2  flex align-items-left justify-content-left">
-                                <input type="text" pInputText [formControlName]="'fp8nv_' + fieldMap.fieldIndex" />
+                            <div class=" w-6 p-1  flex align-items-left justify-content-left">
+                                <esign-input-field class="w-full" [formgroup]="formgroup"
+                                    [name]="'fp8nv_' + fieldMap.fieldIndex"></esign-input-field>
                             </div>
                             <div class="flex flex-column justify-content-center w-min">
-                                <button pButton icon="pi pi-trash" (click)="removeP8DefaultMap(fieldMap.fieldIndex)"></button>
+                                <button pButton icon="pi pi-trash"
+                                    (click)="removeP8DefaultMap(fieldMap.fieldIndex)"></button>
                             </div>
                         </div>
                     </ng-container>

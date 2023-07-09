@@ -28,6 +28,7 @@ import { EsignTemplateP8Component } from './components/esign-template-p8/esign-t
 import { EsignTemplateNotificationComponent } from './components/esign-template-notification/esign-template-notification.component';
 import { MessageAreaComponent } from './components/message-area/message-area.component';
 import { EsignTemplateFieldmapComponent } from './components/esign-template-fieldmap/esign-template-fieldmap.component';
+import { EsignTemplateParticipantmapComponent } from './components/esign-template-participantmap/esign-template-participantmap.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { EsignTemplateFieldmapComponent } from './components/esign-template-fiel
     EsignTemplateP8Component,
     EsignTemplateNotificationComponent,
     MessageAreaComponent,
-    EsignTemplateFieldmapComponent
+    EsignTemplateFieldmapComponent,
+    EsignTemplateParticipantmapComponent
   ],
   imports: [
     BrowserModule,RouterModule.forRoot([

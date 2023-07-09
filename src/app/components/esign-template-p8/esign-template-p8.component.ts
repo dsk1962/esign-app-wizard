@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { EsignApplication, Option } from 'src/app/model/esign-model.model';
 import { ApplicationServiceService } from 'src/app/services/application-service.service';
-import { FormGroup, FormControl, FormBuilder, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, AbstractControl, ValidatorFn, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TreeNode } from 'primeng/api';
 import { Tree } from 'primeng/tree';
@@ -21,9 +21,9 @@ export class EsignTemplateP8Component {
   formgroup = new FormGroup({
     id: new FormControl(''),
     applicationId: new FormControl(''),
-    p8Archive: new FormControl(''),
+    p8Archive: new FormControl('',Validators.maxLength(1)),
     p8DocumentClassLabel: new FormControl(''),
-    p8DocumentClass: new FormControl('')
+    p8DocumentClass: new FormControl('',Validators.maxLength(64))
   });
 
   onNext = () => {

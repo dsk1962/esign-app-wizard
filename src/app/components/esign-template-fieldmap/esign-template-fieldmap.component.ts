@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EsignTemplateFieldMap, Option } from 'src/app/model/esign-model.model';
 import { ApplicationServiceService } from 'src/app/services/application-service.service';
@@ -12,8 +12,23 @@ import { ApplicationServiceService } from 'src/app/services/application-service.
 export class EsignTemplateFieldmapComponent {
   constructor(public applicationServiceService: ApplicationServiceService, private router: Router) {
   }
-  formgroup = new FormGroup({
-  });
+
+  uniqueP8PropertyValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    var isDuplicate = false;
+    if (control.value) {
+      Object.keys(this.formgroup.controls).every(key => {
+        if ((key.startsWith("fp8n_") || key.startsWith("fp8_")) && control != this.formgroup.get(key))
+          if (control.value == this.formgroup.get(key)?.value) {
+            isDuplicate = true;
+            return false;
+          }
+        return true;
+      });
+    }
+    return isDuplicate ? { p8PropertyNotUnique: true } : null;
+  };
+
+  formgroup = new FormGroup({});
 
   fieldMapping: EsignTemplateFieldMap[] = [];
   fieldIndex: number = 0;
@@ -58,8 +73,8 @@ export class EsignTemplateFieldmapComponent {
     var v = new EsignTemplateFieldMap();
     v.fieldIndex = this.fieldIndex++;
     this.fieldMapping.push(v);
-    this.formgroup.addControl('fp8n_' + v.fieldIndex, new FormControl());
-    this.formgroup.addControl('fp8nv_' + v.fieldIndex, new FormControl());
+    this.formgroup.addControl('fp8n_' + v.fieldIndex, new FormControl('', [this.uniqueP8PropertyValidator, Validators.maxLength(64)]));
+    this.formgroup.addControl('fp8nv_' + v.fieldIndex, new FormControl('', Validators.maxLength(256)));
   }
 
   removeP8DefaultMap(index: number): void {
@@ -77,13 +92,13 @@ export class EsignTemplateFieldmapComponent {
       f.fieldIndex = this.fieldIndex++;
       if (f.templateField) {
         this.formgroup.addControl('fname_' + f.fieldIndex, new FormControl(f.templateField));
-        this.formgroup.addControl('fp8_' + f.fieldIndex, new FormControl(f.p8Property));
-        this.formgroup.addControl('fappname_' + f.fieldIndex, new FormControl(f.applicationField));
+        this.formgroup.addControl('fp8_' + f.fieldIndex, new FormControl(f.p8Property, [this.uniqueP8PropertyValidator, Validators.maxLength(64)]));
+        this.formgroup.addControl('fappname_' + f.fieldIndex, new FormControl(f.applicationField, Validators.maxLength(64)));
       }
       else {
-        this.formgroup.addControl('fp8n_' + f.fieldIndex, new FormControl(f.p8Property));
+        this.formgroup.addControl('fp8n_' + f.fieldIndex, new FormControl(f.p8Property, [this.uniqueP8PropertyValidator, Validators.maxLength(64)]));
         console.info("add " + 'fp8n_' + f.fieldIndex);
-        this.formgroup.addControl('fp8nv_' + f.fieldIndex, new FormControl(f.p8DefaultValue));
+        this.formgroup.addControl('fp8nv_' + f.fieldIndex, new FormControl(f.p8DefaultValue, Validators.maxLength(256)));
       }
     });
   }

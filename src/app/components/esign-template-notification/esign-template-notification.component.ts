@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApplicationServiceService } from 'src/app/services/application-service.service';
 
@@ -14,8 +14,8 @@ export class EsignTemplateNotificationComponent {
   formgroup = new FormGroup({
     id: new FormControl(''),
     applicationId: new FormControl(''),
-    notificationEndpoint: new FormControl(''),
-    notificationRequired: new FormControl(''),
+    notificationEndpoint: new FormControl('',Validators.maxLength(256)),
+    notificationRequired: new FormControl('',Validators.maxLength(1)),
   });
 
   onNext = () => {

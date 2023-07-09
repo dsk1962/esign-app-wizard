@@ -7,7 +7,7 @@ body {
     font-family: var(--font-family);
 }
 
-.esign-inputfield-wrapper{
+.esign-inputfield-wrapper {
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -15,26 +15,38 @@ body {
     padding-top: 8px;
 }
 
-.esign-inputfield-label{
+.esign-template-fieldmap .esign-inputfield-wrapper {
+    padding-top: 0px;
+}
+
+.esign-inputfield-label {
     min-width: 100px;
     justify-content: center;
     display: flex;
     flex-direction: column;
 }
 
-.esign-page{
-    margin-top: 20px;;
-    padding:10px;
-    width:1000px;
+.esign-page {
+    margin-top: 20px;
+    padding: 10px;
+    width: 1000px;
     border: 1px solid #dcdcdc;
 }
 
-.esign-inputfield-wrapper .p-inputwrapper,.p-component{
+.esign-page esign-inputfield {
+    width: 100%;
+}
+esign-inputfield {
+    width: 100%;
+}
+
+.esign-inputfield-wrapper .p-inputwrapper,
+.p-component {
     width: 100%;
 }
 
 
-.esign-template-fieldmap .p-inputwrapper{
+.esign-template-fieldmap .p-inputwrapper {
     width: 100%;
 }
 
@@ -42,43 +54,45 @@ body {
     color: red;
 }
 
-.esign-application .esign-inputfield-label{
+.esign-application .esign-inputfield-label {
     min-width: 200px;
 }
 
-.esign-toolbar{
-    margin-top: 10px;;
+.esign-toolbar {
+    margin-top: 10px;
+    ;
     justify-content: right;
     display: flex;
     flex-direction: row;
 }
 
-.esign-toolbar p-button{
-    width:90px;
+.esign-toolbar p-button {
+    width: 90px;
     margin-left: 10px;
 }
 
-.esign-template-p8 p-tree{
+.esign-template-p8 p-tree {
     width: 100% !important;
     max-height: 500px;
     display: block;
     overflow: auto;
 }
 
-.esign-page p-tree{
-    padding-top:8px;
+.esign-page p-tree {
+    padding-top: 8px;
 }
 
-.esign-template-p8 .esign-inputfield-label{
+.esign-template-p8 .esign-inputfield-label {
     min-width: 160px;
 }
 
-.esign-template-notification .esign-inputfield-label{
+.esign-template-notification .esign-inputfield-label {
     min-width: 170px;
 }
-.esign-inline-button{
-    display:flex;
-    flex-direction: column; 
+
+.esign-inline-button {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     padding-top: 8px;
     padding-left: 8px;
@@ -88,6 +102,7 @@ body {
     width: 100%;
     padding: 0px 5px 0px 5px;
 }
+
 .message-area {
     width: 100%;
     margin: 3px 0px 3px 0px;
@@ -101,7 +116,7 @@ body {
 .info-message {
     color: green;
     overflow: auto;
-    display:flex;
+    display: flex;
     flex: 1;
     flex-direction: column;
     justify-content: center;
@@ -109,7 +124,7 @@ body {
 }
 
 .error-message {
-    display:flex;
+    display: flex;
     flex: 1;
     flex-direction: column;
     justify-content: center;
@@ -118,12 +133,12 @@ body {
     color: red;
 }
 
-.esig-section-header{
+.esig-section-header {
     font-size: 18px;
     font-weight: bolder;
     color: dimgray;
 }
 
-.esign-page-body{
+.esign-page-body {
     min-height: 170px;
 }
