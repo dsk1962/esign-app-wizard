@@ -29,7 +29,7 @@
                     class="{{getClassName()}}" [formControlName]="name" (onClick)="onclick($event)"></p-inputMask>
             </ng-container>
             <ng-container *ngSwitchCase="WSUBTYPES.NUMERIC">
-                <p-inputNumber class="{{getClassName()}}" [showButtons]="true" [pTooltip]="tooltip"
+                <p-inputNumber class="{{getClassName()}}" [pTooltip]="tooltip"
                     [required]="isRequired()" [formControlName]="name" [placeholder]="placeHolder"
                     (onChange)="onchange($event)" [readonly]="isReadOnly()" (onClick)="onclick($event)"></p-inputNumber>
             </ng-container>

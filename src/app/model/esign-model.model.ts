@@ -31,6 +31,15 @@ export class EsignTemplateFieldMap {
     fieldIndex: number = 0;
 }
 
+export class EsignTemplateParticipantdMap {
+    templateId :string = '';
+	templateParticipant: string = '';
+	applicationParticipant: string = '';
+	order: number = 1;
+	role: string = '';
+    fieldIndex: number = 0;
+}
+
 
 export class ActionRequest {
     action?: string;

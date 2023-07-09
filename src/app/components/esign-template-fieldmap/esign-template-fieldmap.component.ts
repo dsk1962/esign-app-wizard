@@ -5,7 +5,7 @@ import { EsignTemplateFieldMap, Option } from 'src/app/model/esign-model.model';
 import { ApplicationServiceService } from 'src/app/services/application-service.service';
 
 @Component({
-  selector: 'app-esign-template-fieldmap',
+  selector: 'esign-template-fieldmap',
   templateUrl: './esign-template-fieldmap.component.html',
   styleUrls: ['./esign-template-fieldmap.component.scss']
 })
@@ -35,12 +35,6 @@ export class EsignTemplateFieldmapComponent {
 
   p8Properties: Option[] = [];
 
-  onNext = () => {
-    var me = this;
-    if (this.formgroup.valid)
-      this.submitData(() => me.router.navigateByUrl("/esign-template-notification"));
-  }
-
   submitData(successHandler?: any): void {
     var data = this.formgroup.value as any;
     var result = [] as any;
@@ -60,7 +54,7 @@ export class EsignTemplateFieldmapComponent {
         result.push(v);
       }
     });
-    this.applicationServiceService.postBody("templates/teplatefieldmap/" + this.applicationServiceService.esignTemplate?.id, result, successHandler);
+    this.applicationServiceService.postBody("templates/templatefieldmap/" + this.applicationServiceService.esignTemplate?.id, result, successHandler);
   }
 
   hasFormFields(): boolean {
@@ -105,18 +99,22 @@ export class EsignTemplateFieldmapComponent {
 
   readFieldMapping(id: string): void {
     var me = this;
-    this.applicationServiceService.runAction("templates/teplatefieldmap/" + id, this.setFieldMap);
+    this.applicationServiceService.runAction("templates/templatefieldmap/" + id, this.setFieldMap);
     if (this.applicationServiceService.esignTemplate?.p8Archive == 'Y' && this.p8Properties.length == 0)
       this.applicationServiceService.runAction("p8/documentclass/" + this.applicationServiceService.esignTemplate.p8DocumentClass + "/propertydefinitions",
         (v: Option[]) => { me.p8Properties = v; me.p8Properties.unshift({ id: '', name: 'Not Set' }) });
   }
 
+  onNext = () => {
+    var me = this;
+    if (this.formgroup.valid)
+      this.submitData(() => me.router.navigateByUrl("/esign-template-participantmap"));
+  }
+
   onPrevious = () => {
     var me = this;
     if (this.formgroup.valid)
-      this.applicationServiceService.saveEsignTemplate(this.formgroup,
-        () => { me.router.navigateByUrl("/esign-template-notification"); }
-      );
+    this.submitData(() => me.router.navigateByUrl("/esign-template-notification"));
   }
   ngOnInit() {
     var me = this;

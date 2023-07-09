@@ -1,1 +1,44 @@
-<p>esign-template-participantmap works!</p>
+<form [formGroup]="formgroup">
+    <div class="esign-page esign-template-participantmap">
+        <div class="esign-page-body">
+            <div class="card ">
+                <div class="card-container">
+                    <div class="flex">
+                        <div class=" w-3  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">
+                            Template Participant</div>
+                        <div class="w-3  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">
+                            Application Participant</div>
+                        <div class="w-3  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">
+                            Order</div>
+                        <div class="w-3  text-gray-900 font-bold p-2 flex align-items-center justify-content-center">P8
+                            Property</div>
+                    </div>
+                    <div class="flex" *ngFor="let participantMap of participantMapping">
+                        <div class=" w-3 p-1 flex align-items-left justify-content-left">
+                            <esign-input-field [formgroup]="formgroup" [name]="'pname_' + participantMap.fieldIndex"
+                                fieldType="hiddenfield"></esign-input-field>
+                            <div class="flex flex-column justify-content-center">{{participantMap.templateParticipant}}
+                            </div>
+                        </div>
+                        <div class=" w-3 p-1  flex align-items-left justify-content-left">
+                            <esign-input-field class="w-full" [formgroup]="formgroup"
+                                [name]="'pappname_' + participantMap.fieldIndex"></esign-input-field>
+                        </div>
+                        <div class=" w-3 p-1  flex align-items-left justify-content-left">
+                            <esign-input-field class="w-full" [formgroup]="formgroup"
+                                [name]="'porder_' + participantMap.fieldIndex" fieldType="numeric"></esign-input-field>
+                        </div>
+                        <div class=" w-3 p-1 flex align-items-left justify-content-left">
+                            <esign-input-field class="w-full" [formgroup]="formgroup" [options]="roles"
+                                [name]="'prole_' + participantMap.fieldIndex" fieldType="combobox"></esign-input-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="esign-toolbar">
+            <p-button label="Previous" type="button" (click)="onPrevious()"
+                [disabled]="!formgroup.valid"></p-button>
+        </div>
+</div>
+</form>

@@ -7,15 +7,19 @@ import { ApplicationServiceService } from './services/application-service.servic
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor( private applicationServiceService: ApplicationServiceService) {
+  constructor(private applicationServiceService: ApplicationServiceService) {
     this.applicationServiceService.blockUI.subscribe((v) => {
       this.blockDocument(v);
+    });
+    this.applicationServiceService.templateSelected.subscribe((v) => {
+      this.templateSelected = v;
     });
   }
   title = 'esign-app-wizard';
   blockedDocumentCounter: number = 0;
   blockedDocument: boolean = false;
-  
+  templateSelected: boolean = false;
+
   blockDocument(v: boolean) {
     var me = this;
     if (v)
@@ -30,6 +34,7 @@ export class AppComponent {
       this.blockedDocument = b;
     console.log("this.blockedDocument=", this.blockedDocument);
     console.log("this.blockedDocumentCounter=", this.blockedDocumentCounter);
-  }}
+  }
+}
 
 

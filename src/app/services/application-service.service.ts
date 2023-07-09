@@ -20,9 +20,12 @@ export class ApplicationServiceService {
   private aBlockUI: Subject<boolean> = new Subject<boolean>();    // consider putting the actual type of the data you will receive
   public blockUI = this.aBlockUI.asObservable();
 
+  private aTtemplateSelected: Subject<boolean> = new Subject<boolean>();    // consider putting the actual type of the data you will receive
+  public templateSelected = this.aTtemplateSelected.asObservable();
+
   private applicationParameters: any = {};
   public esignApplication?: EsignApplication;
-  public esignTemplate?: EsignTemplate;
+  public esignTemplate: EsignTemplate|null=null;
   p8Documents: TreeNode[] = [];
 
 
@@ -41,6 +44,7 @@ export class ApplicationServiceService {
 
   setEsignApplication(app: EsignApplication): void {
     this.esignApplication = app;
+    this.setEsignTemplate(null);
     if (this.hasValidApplication()) {
       this.setApplicationParameter(null, "ApplicationId", this.esignApplication.id);
       this.setApplicationParameter(null, "ServiceAccount", this.esignApplication.serviceAccount);
@@ -63,7 +67,8 @@ export class ApplicationServiceService {
     return node;
   }
 
-  setEsignTemplate(template: EsignTemplate): void {
+  setEsignTemplate(template: EsignTemplate|null): void {
+    this.aTtemplateSelected.next(template != null);
     this.esignTemplate = template;
   }
 

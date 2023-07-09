@@ -71,13 +71,13 @@ export class InputFieldComponent {
       if (err == 'minlength')
         return 'Text length must be greater or equal ' + errObject.errorValue.requiredLength + " actual length: " + errObject.errorValue.actualLength;
       if (err == 'maxlength')
-        return 'Text length must be less or equal: ' + errObject.errorValue.requiredLength + " actual length: " + errObject.errorValue.actualLength;
+        return 'Text length must be less or equal ' + errObject.errorValue.requiredLength + " actual length: " + errObject.errorValue.actualLength;
       if (err == 'min')
-        return 'Value must be greater or equal  '//; + (this.inputWidget as any)?.minValue;
+        return 'Value must be greater or equal ' + errObject.errorValue.min;
       if (err == 'max')
-        return 'Value must be less or equal  ';// + (this.inputWidget as any)?.maxValue;
+        return 'Value must be less or equal ' + errObject.errorValue.max;
       if (err == 'p8PropertyNotUnique')
-        return 'P8 property not unique';// + (this.inputWidget as any)?.maxValue;
+        return 'P8 property not unique';
     }
     return '';
   }
