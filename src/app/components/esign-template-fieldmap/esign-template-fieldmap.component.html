@@ -50,11 +50,11 @@
                     <ng-container class="flex" *ngFor="let fieldMap of fieldMapping">
                         <div class="flex" *ngIf="!fieldMap.templateField">
                             <div class=" w-6 p-1 flex align-items-left justify-content-left">
-                                <esign-input-field class="w-full" [formgroup]="formgroup" [options]="p8Properties"
+                                <esign-input-field class="w-full" [formgroup]="formgroup" [options]="p8Properties" required="true"
                                     [name]="'fp8n_' + fieldMap.fieldIndex" fieldType="combobox"></esign-input-field>
                             </div>
                             <div class=" w-6 p-1  flex align-items-left justify-content-left">
-                                <esign-input-field class="w-full" [formgroup]="formgroup"
+                                <esign-input-field class="w-full" [formgroup]="formgroup" required="true"
                                     [name]="'fp8nv_' + fieldMap.fieldIndex"></esign-input-field>
                             </div>
                             <div class="flex flex-column justify-content-center w-min">

@@ -37,8 +37,11 @@
             </div>
         </div>
         <div class="esign-toolbar">
-            <p-button label="Previous" type="button" (click)="onPrevious()"
+            <p-button label="Previous" type="button" (click)="onPrevious()" [disabled]="!formgroup.valid"></p-button>
+            <p-button label="To Template Selection" type="button" (click)="onPrevious()" class="wide-button"
+                [disabled]="!formgroup.valid"></p-button>
+            <p-button label="To Application Selection" type="button" (click)="onPrevious()" class="wide-button"
                 [disabled]="!formgroup.valid"></p-button>
         </div>
-</div>
+    </div>
 </form>

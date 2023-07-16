@@ -31,6 +31,7 @@ body {
     padding: 10px;
     width: 1000px;
     border: 1px solid #dcdcdc;
+    background-color: #EEEEEE;
 }
 
 .esign-page esign-inputfield {
@@ -141,4 +142,8 @@ esign-inputfield {
 
 .esign-page-body {
     min-height: 170px;
+}
+
+.esign-template-participantmap .esign-toolbar .wide-button{
+    width: 210px;
 }
