@@ -39,7 +39,7 @@ export class EsignApplicationComponent {
   onNext = () => {
     var me = this;
     if (this.formgroup.valid)
-      this.applicationServiceService.saveEsignApplication(this.formgroup, () => { me.router.navigateByUrl("/esign-template"); });
+      this.applicationServiceService.saveEsignApplication(this.formgroup, () => { me.router.navigateByUrl("/esign-template", { skipLocationChange: true }); });
   }
 
 

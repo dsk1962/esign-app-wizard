@@ -2,30 +2,33 @@
 <message-area />
 <nav>
   <div class="flex flex-row">
-    <a class="button" routerLink="/esign-application" routerLinkActive="activebutton" ariaCurrentWhenActive="page">
+    <a class="button" routerLink="/esign-application" routerLinkActive="activebutton" ariaCurrentWhenActive="page"
+      skipLocationChange>
       Application
     </a><span class="p-1">|</span>
-    <a class="button" routerLink="/esign-template" routerLinkActive="activebutton" ariaCurrentWhenActive="page">
+    <a class="button" routerLink="/esign-template" routerLinkActive="activebutton" ariaCurrentWhenActive="page"
+      skipLocationChange>
       Template
     </a>
     <div *ngIf="templateSelected">
       <span class="p-1">|</span>
-      <a class="button" routerLink="/esign-template-p8" routerLinkActive="activebutton" ariaCurrentWhenActive="page">
+      <a class="button" routerLink="/esign-template-p8" routerLinkActive="activebutton" ariaCurrentWhenActive="page"
+        skipLocationChange>
         P8 Archival
       </a>
       <span class="p-1">|</span>
       <a class="button" routerLink="/esign-template-notification" routerLinkActive="activebutton"
-        ariaCurrentWhenActive="page">
+        ariaCurrentWhenActive="page" skipLocationChange>
         Notification
       </a>
       <span class="p-1">|</span>
       <a class="button" routerLink="/esign-template-fieldmap" routerLinkActive="activebutton"
-        ariaCurrentWhenActive="page">
+        ariaCurrentWhenActive="page" skipLocationChange>
         Field Map
       </a>
       <span class="p-1">|</span>
       <a class="button" routerLink="/esign-template-participantmap" routerLinkActive="activebutton"
-        ariaCurrentWhenActive="page">
+        ariaCurrentWhenActive="page" skipLocationChange>
         Participants
       </a>
     </div>

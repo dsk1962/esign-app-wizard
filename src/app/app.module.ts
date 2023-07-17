@@ -50,7 +50,7 @@ import { EsignTemplateParticipantmapComponent } from './components/esign-templat
       {path: 'esign-template-notification', component: EsignTemplateNotificationComponent},
       {path: 'esign-template-fieldmap', component: EsignTemplateFieldmapComponent},
       {path: 'esign-template-participantmap', component: EsignTemplateParticipantmapComponent},
-      {path: '', redirectTo: '/esign-application', pathMatch: 'full'}]),
+      {path: '', component: EsignApplicationComponent}]),
     AppRoutingModule,
     BlockUIModule,
     BrowserModule,

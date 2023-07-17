@@ -70,7 +70,7 @@ export class EsignTemplateParticipantmapComponent {
   onPrevious = () => {
     var me = this;
     if (this.formgroup.valid)
-      this.submitData(() => me.router.navigateByUrl("/esign-template-fieldmap"));
+      this.submitData(() => me.router.navigateByUrl("/esign-template-fieldmap", { skipLocationChange: true }));
   }
   ngOnInit() {
     var me = this;
@@ -82,14 +82,14 @@ export class EsignTemplateParticipantmapComponent {
       }
       else {
         setTimeout(() => {
-          this.router.navigateByUrl("/esign-template");
+          this.router.navigateByUrl("/esign-template", { skipLocationChange: true });
         }, 10);
 
       }
     }
     else {
       setTimeout(() => {
-        this.router.navigateByUrl("/esign-application");
+        this.router.navigateByUrl("/esign-application", { skipLocationChange: true });
       }, 10);
     }
   }

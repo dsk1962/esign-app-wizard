@@ -37,7 +37,7 @@ export class EsignTemplateComponent {
     if (!this.applicationServiceService.esignApplication || this.applicationServiceService.esignApplication.id == '') {
       this.applicationServiceService.setErrorMessage("No application selected.");
       setTimeout(() => {
-        me.router.navigateByUrl("/esign-application");
+        me.router.navigateByUrl("/esign-application", { skipLocationChange: true });
       }, 10);
     }
     else {
@@ -46,7 +46,7 @@ export class EsignTemplateComponent {
       if (template.applicationId != this.applicationServiceService.esignApplication.id) {
         this.applicationServiceService.setErrorMessage("Application data error. This template is registred for another application.");
         setTimeout(() => {
-          me.router.navigateByUrl("/esign-application");
+          me.router.navigateByUrl("/esign-application", { skipLocationChange: true });
         }, 10);
       }
       this.templateOptions.forEach(option => {
@@ -63,11 +63,11 @@ export class EsignTemplateComponent {
     var me = this;
     if (this.formgroup.valid)
       this.applicationServiceService.saveEsignTemplate(this.formgroup,
-        () => { me.router.navigateByUrl("/esign-template-p8"); }
+        () => { me.router.navigateByUrl("/esign-template-p8", { skipLocationChange: true }); }
       );
   }
   onPrevious = () => {
-    this.router.navigateByUrl("/esign-application");
+    this.router.navigateByUrl("/esign-application", { skipLocationChange: true });
   }
   setTemplateOptions = (v: Option[]) => {
     this.templateOptions = v;
@@ -90,7 +90,7 @@ export class EsignTemplateComponent {
     }
     else {
       setTimeout(() => {
-        this.router.navigateByUrl("/esign-application");
+        this.router.navigateByUrl("/esign-application", { skipLocationChange: true });
       }, 10);
     }
   }

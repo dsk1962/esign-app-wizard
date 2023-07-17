@@ -108,13 +108,13 @@ export class EsignTemplateFieldmapComponent {
   onNext = () => {
     var me = this;
     if (this.formgroup.valid)
-      this.submitData(() => me.router.navigateByUrl("/esign-template-participantmap"));
+      this.submitData(() => me.router.navigateByUrl("/esign-template-participantmap", { skipLocationChange: true }));
   }
 
   onPrevious = () => {
     var me = this;
     if (this.formgroup.valid)
-    this.submitData(() => me.router.navigateByUrl("/esign-template-notification"));
+    this.submitData(() => me.router.navigateByUrl("/esign-template-notification", { skipLocationChange: true }));
   }
   ngOnInit() {
     var me = this;
@@ -126,14 +126,14 @@ export class EsignTemplateFieldmapComponent {
       }
       else {
         setTimeout(() => {
-          this.router.navigateByUrl("/esign-template");
+          this.router.navigateByUrl("/esign-template", { skipLocationChange: true });
         }, 10);
 
       }
     }
     else {
       setTimeout(() => {
-        this.router.navigateByUrl("/esign-application");
+        this.router.navigateByUrl("/esign-application", { skipLocationChange: true });
       }, 10);
     }
   }

@@ -30,14 +30,14 @@ export class EsignTemplateP8Component {
     var me = this;
     if (this.formgroup.valid)
       this.applicationServiceService.saveEsignTemplate(this.formgroup,
-        () => { me.router.navigateByUrl("/esign-template-notification"); }
+        () => { me.router.navigateByUrl("/esign-template-notification", { skipLocationChange: true }); }
       );
   }
   onPrevious = () => {
     var me = this;
     if (this.formgroup.valid)
       this.applicationServiceService.saveEsignTemplate(this.formgroup,
-        () => { me.router.navigateByUrl("/esign-template"); }
+        () => { me.router.navigateByUrl("/esign-template", { skipLocationChange: true }); }
       );
   }
 
@@ -81,14 +81,14 @@ export class EsignTemplateP8Component {
       }
       else {
         setTimeout(() => {
-          this.router.navigateByUrl("/esign-template");
+          this.router.navigateByUrl("/esign-template", { skipLocationChange: true });
         }, 10);
 
       }
     }
     else {
       setTimeout(() => {
-        this.router.navigateByUrl("/esign-application");
+        this.router.navigateByUrl("/esign-application", { skipLocationChange: true });
       }, 10);
     }
   }
